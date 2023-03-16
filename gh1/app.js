@@ -27,7 +27,9 @@ app.get('/api/sensor-data', (req, res) => {
 
 // Serve the frontend HTML page
 app.get('/', (req, res) => {
+  // res.sendFile(path.join(__dirname, 'index.html'));
   res.sendFile(path.join(__dirname, 'index.html'));
+
 });
 
 // Start the server on port 3000
