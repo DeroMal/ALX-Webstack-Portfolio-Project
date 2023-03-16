@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Dero Sensor Readings</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+      }
+
+      h1 {
+        text-align: center;
+      }
+
+      .reading {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+        background-color: #f0f0f0;
+        border-radius: 5px;
+      }
+
+      .reading span {
+        font-weight: bold;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Dero Sensor Readings</h1>
+    <div id="latest-reading" class="reading"></div>
+    <script>
+      // Function to retrieve the latest sensor reading and update the page
+      function updateReading() {
+        // Make a GET request to the API route to retrieve the latest sensor reading
+        fetch('/api/sensor-data')
+          .then(response => response.json())
+          .then(data => {
+            // Update the latest reading element with the new temperature and humidity values
+            const latestReadingEl = document.getElementById('latest-reading');
+            latestReadingEl.innerHTML = `
+              <span>Temperature:</span>
+              <span>${data.temperature}&deg;C</span>
+              <span>Humidity:</span>
+              <span>${data.humidity}%</span>
+              <span>Timestamp:</span>
+              <span>${new Date(data.timestamp).toLocaleString()}</span>
+            `;
+          })
+          .catch(error => {
+            console.error(error);
+            alert('Error retrieving sensor reading');
+          });
+      }
+
+      // Call the updateReading function to initialize the latest sensor reading
+      updateReading();
+
+      // Call the updateReading function every 5 seconds to update the reading
+      setInterval(updateReading, 5000);
+    </script>
+  </body>
+</html>
