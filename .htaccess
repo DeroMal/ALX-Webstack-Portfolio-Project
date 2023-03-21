@@ -3,5 +3,5 @@ PassengerAppRoot "/home/wlgykctu/sensgro.rec22test.site"
 PassengerBaseURI "/"
 PassengerNodejs "/home/wlgykctu/nodevenv/sensgro.rec22test.site/14/bin/node"
 PassengerAppType node
-PassengerStartupFile app2.js
+PassengerStartupFile sensor_data.js
 # DO NOT REMOVE. CLOUDLINUX PASSENGER CONFIGURATION END
