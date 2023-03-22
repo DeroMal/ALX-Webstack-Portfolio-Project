@@ -51,15 +51,15 @@ app.post('/sensor-data', (req, res) => {
 
 // Endpoint to receive actuator data
 app.post('/actuator-data', (req, res) => {
-    const { fanStatus, humidifierStatus, pumpStatus, lightStatus } = req.body;
+    const { fanStatus,  humidifierStatus, waterPumpStatus, lightStatus } = req.body;
 
     // Validate inputs
-    if (!temperature || !humidity) {
+    if (!lightStatus || !waterPumpStatus || !fanStatus || !humidifierStatus) {
         return res.status(400).json({ error: 'Missing input data' });
     }
 
     // Insert data into database
-    const sql = `INSERT INTO actuator_data (fanStatus, humidifierStatus, pumpStatus, lightStatus) VALUES (${fanStatus}, ${humidifierStatus}, ${pumpStatus}, ${lightStatus})`;
+    const sql = `INSERT INTO actuator_data (fanStatus,  humidifierStatus, waterPumpStatus, lightStatus) VALUES ('${fanStatus}', '${humidifierStatus}', '${waterPumpStatus}', '${lightStatus}')`;
     connection.query(sql, (err, results) => {
         if (err) {
             console.error('Error inserting data into database:', err);
