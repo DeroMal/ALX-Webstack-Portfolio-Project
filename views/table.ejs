@@ -217,7 +217,7 @@
                 </table>
               </div>
             </div>
-            <div class="pagination">
+            <!-- <div class="pagination">
               <% if (currentPage > 1) { %>
                 <a href="?page=<%= currentPage - 1 %>">&laquo; Prev</a>
               <% } %>
@@ -231,7 +231,37 @@
               <% if (currentPage < pageCount) { %>
                 <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
               <% } %>
+            </div> -->
+            <div class="pagination">
+              <% if (currentPage > 1) { %>
+                <a href="?page=<%= currentPage - 1 %>">&laquo; Prev</a>
+              <% } %>
+              <% let windowStart = Math.max(1, currentPage - 2); %>
+              <% let windowEnd = Math.min(windowStart + 4, pageCount); %>
+              <% if (windowStart > 1) { %>
+                <a href="?page=1">1</a>
+                <% if (windowStart > 2) { %>
+                  <span>...</span>
+                <% } %>
+              <% } %>
+              <% for (let i = windowStart; i <= windowEnd; i++) { %>
+                <% if (i === parseInt(currentPage)) { %>
+                  <a href="#" class="active"><%= i %></a>
+                <% } else { %>
+                  <a href="?page=<%= i %>"><%= i %></a>
+                <% } %>
+              <% } %>
+              <% if (windowEnd < pageCount) { %>
+                <% if (windowEnd < pageCount - 1) { %>
+                  <span>...</span>
+                <% } %>
+                <a href="?page=<%= pageCount %>"><%= pageCount %></a>
+              <% } %>
+              <% if (currentPage < pageCount) { %>
+                <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+              <% } %>
             </div>
+            
           </div>
         </div>
       </div>
