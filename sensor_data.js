@@ -54,7 +54,7 @@ app.post('/actuator-data', (req, res) => {
     const { fanStatus, humidifierStatus, pumpStatus, lightStatus } = req.body;
 
     // Validate inputs
-    if (!temperature || !humidity) {
+    if (!fanStatus || !humidifierStatus || !pumpStatus || !lightStatus) {
         return res.status(400).json({ error: 'Missing input data' });
     }
 
