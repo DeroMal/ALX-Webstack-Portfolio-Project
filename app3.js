@@ -6,10 +6,14 @@ const app = express();
 
 // Set up MySQL connection
 const connection = mysql.createConnection({
+  // host: 'localhost',
+  // user: 'root',
+  // password: '',
+  // database: 'sensgro'
   host: 'localhost',
-  user: 'root',
-  password: '',
-  database: 'sensgro'
+  user: 'wlgykctu_derrickml',
+  password: 'derrickloma',
+  database: 'wlgykctu_smartgro'
 });
 
 // Connect to MySQL

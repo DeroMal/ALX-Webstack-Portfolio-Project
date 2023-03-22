@@ -12,7 +12,7 @@ const connection = mysql.createConnection({
   host: 'localhost',
   user: 'wlgykctu_derrickml',
   password: 'derrickloma',
-  database: 'senwlgykctu_smartgro'
+  database: 'wlgykctu_smartgro'
 });
 
 // Connect to MySQL
