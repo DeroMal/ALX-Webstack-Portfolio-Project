@@ -68,3 +68,168 @@ Error inserting data into database: Error: Cannot enqueue Query after fatal erro
   code: 'PROTOCOL_ENQUEUE_AFTER_FATAL_ERROR',
   fatal: false
 }
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 14
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 14
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+ReferenceError: temperature is not defined
+    at /home/wlgykctu/sensgro.rec22test.site/sensor_data.js:57:5
+    at Layer.handle [as handle_request] (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/layer.js:95:5)
+    at next (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/route.js:144:13)
+    at Route.dispatch (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/route.js:114:3)
+    at Layer.handle [as handle_request] (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/layer.js:95:5)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/index.js:284:15
+    at Function.process_params (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/index.js:346:12)
+    at next (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/index.js:280:10)
+    at urlencodedParser (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/urlencoded.js:82:7)
+    at Layer.handle [as handle_request] (/home/wlgykctu/sensgro.rec22test.site/node_modules/express/lib/router/layer.js:95:5)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
+SyntaxError: Unexpected token O in JSON at position 13
+    at JSON.parse (<anonymous>)
+    at parse (/home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/types/json.js:89:19)
+    at /home/wlgykctu/sensgro.rec22test.site/node_modules/body-parser/lib/read.js:128:18
+    at AsyncResource.runInAsyncScope (async_hooks.js:197:9)
+    at invokeCallback (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:231:16)
+    at done (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:220:7)
+    at IncomingMessage.onEnd (/home/wlgykctu/sensgro.rec22test.site/node_modules/raw-body/index.js:280:7)
+    at IncomingMessage.emit (events.js:412:35)
+    at endReadableNT (internal/streams/readable.js:1333:12)
+    at processTicksAndRejections (internal/process/task_queues.js:82:21)
