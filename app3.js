@@ -1,38 +1,51 @@
-require("dotenv").config();
 const express = require('express');
-const cors = require("cors");
-const path = require('path');
+const mysql = require('mysql');
+
 const app = express();
 
+// Set the view engine to ejs
+app.set('view engine', 'ejs');
 
-// Serve static files from the 'public' directory
-// app.use(express.static(path.join(__dirname, '')));
-app.use(cors({ origin: process.env.REMOTE_CLIENT_APP, credentials: true }));
+// Create a connection to the database
+const connection = mysql.createConnection({
+  host: 'localhost',
+  user: 'root',
+  password: '',
+  database: 'sensgro'
+});
 
+// Connect to the database
+connection.connect();
 
-// Define a route to get the sensor data
-app.get('/api/sensor-data', (req, res) => {
-  // Generate random sensor readings
-  const temperature = Math.floor(Math.random() * 50);
-  const humidity = Math.floor(Math.random() * 100);
-  const timestamp = new Date();
-
-  // Return the sensor readings as a JSON object
-  res.json({
-    temperature,
-    humidity,
-    timestamp
+// Define a route for the homepage
+app.get('public/views/table', (req, res) => {
+  // Query the database for temperature and humidity data
+  connection.query('SELECT * FROM sensor_data', (error, results, fields) => {
+    if (error) throw error;
+    // Render the index view with the temperature and humidity data
+    res.render('table', { data: results });
   });
 });
 
-// Serve the frontend HTML page
-app.get('/', (req, res) => {
-  // res.sendFile(path.join(__dirname, 'index.html'));
-  res.sendFile(path.join(__dirname, 'index.html'));
+// Define a route for the temperature and humidity graph
+app.get('/graph', (req, res) => {
+  // Query the database for temperature and humidity data
+  connection.query('SELECT * FROM sensor_data', (error, results, fields) => {
+    if (error) throw error;
 
+    // Extract the temperature and humidity data from the results
+    const temperatures = results.map(result => result.temperature);
+    const humidities = results.map(result => result.humidity);
+
+    // Render the graph view with the temperature and humidity data
+    res.render('graph', {
+      temperatures: temperatures,
+      humidities: humidities
+    });
+  });
 });
 
-// Start the server on port 3000
+// Start the server
 app.listen(3000, () => {
   console.log('Server started on port 3000');
 });
