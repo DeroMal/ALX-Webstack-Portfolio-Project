@@ -22,7 +22,7 @@ connection.connect((err) => {
 });
 
 // Set up middleware for serving static files and parsing request body
-app.use(express.static('public/pages/pages'));
+app.use(express.static('/dashboard'));
 app.use(express.urlencoded({ extended: true }));
 
 // Set up route for displaying paginated sensor data
