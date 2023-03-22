@@ -59,7 +59,7 @@ app.post('/actuator-data', (req, res) => {
     }
 
     // Insert data into database
-    const sql = `INSERT INTO actuator_data (fanStatus, humidifierStatus, pumpStatus, lightStatus) VALUES (${fanStatus}, ${humidifierStatus}, ${pumpStatus}, ${lightStatus})`;
+    const sql = `INSERT INTO actuator_data (fanStatus, humidifierStatus, pumpStatus, lightStatus) VALUES ('${fanStatus}', '${humidifierStatus}', '${pumpStatus}', '${lightStatus}')`;
     connection.query(sql, (err, results) => {
         if (err) {
             console.error('Error inserting data into database:', err);
