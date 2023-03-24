@@ -23,7 +23,7 @@ connection.connect((err) => {
 });
 
 // Set up middleware for serving static files and parsing request body
-app.use(express.static(path.join(__dirname, '../public/pages')));
+app.use(express.static(path.join(__dirname, '/public/pages')));
 
 // Set up route for displaying paginated sensor data
 app.get('/table', (req, res) => {
@@ -56,7 +56,7 @@ app.get('/table', (req, res) => {
 
 // Set up route for displaying the home page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '../public/pages/index.html'));
+  res.sendFile(path.join(__dirname, '/public/pages/index.html'));
 });
 
 // Start the server
