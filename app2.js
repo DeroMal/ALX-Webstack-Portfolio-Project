@@ -4,6 +4,7 @@ const cors = require("cors");
 const path = require('path');
 const mysql = require('mysql');
 const ejs = require('ejs');
+const moment = require('moment-timezone');
 
 const app = express();
 
@@ -35,7 +36,11 @@ app.get('/table', (req, res) => {
   const query = `SELECT * FROM sensor_data ORDER BY id DESC LIMIT ${startIndex},${pageSize}`;
   connection.query(query, (err, results) => {
     if (err) throw err;
-    const sensorData = results;
+    const sensorData = results.map(data => {
+      const localTime = moment.tz(data.timestamp, 'Africa/Kampala');
+      data.timestamp = localTime.format('DD/MM/YY - HH:mm:ss');
+      return data;
+    });
     const totalCountQuery = 'SELECT COUNT(*) AS totalCount FROM sensor_data';
     connection.query(totalCountQuery, (err, result) => {
       if (err) throw err;
