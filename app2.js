@@ -59,6 +59,11 @@ app.get('/table', (req, res) => {
 app.set('view engine', 'ejs');
 app.set('views', __dirname + '/views');
 
+// Set up route for root URL
+app.get('/', (req, res) => {
+  res.sendFile(path.join(__dirname, '../public/pages/index.html'));
+});
+
 //---------------------------------------------------//
 // Serve the HTML and JavaScript files
 // app.use(express.static('public/pages'));
