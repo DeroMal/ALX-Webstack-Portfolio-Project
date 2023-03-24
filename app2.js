@@ -27,7 +27,7 @@ app.use(express.static('../public/pages/'));
 app.use(express.urlencoded({ extended: true }));
 
 // Set up route for displaying paginated sensor data
-app.get('/table', (req, res) => {
+app.get('/', (req, res) => {
   const pageSize = 10; // number of records to display per page
   const currentPage = req.query.page || 1; // get current page from query parameter or default to page 1
   const startIndex = (currentPage - 1) * pageSize; // calculate start index of records to display
