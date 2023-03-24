@@ -54,6 +54,10 @@ app.get('/table', (req, res) => {
   });
 });
 
+// Set up view engine and template directory
+app.set('view engine', 'ejs');
+app.set('views', __dirname + '/views');
+
 // Set up route for displaying the home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '/public/pages/index.html'));
