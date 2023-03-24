@@ -23,8 +23,7 @@ connection.connect((err) => {
 });
 
 // Set up middleware for serving static files and parsing request body
-app.use(express.static('/public/pages/'));
-app.use(express.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, '../public/pages')));
 
 // Set up route for displaying paginated sensor data
 app.get('/table', (req, res) => {
@@ -55,18 +54,10 @@ app.get('/table', (req, res) => {
   });
 });
 
-// Set up view engine and template directory
-app.set('view engine', 'ejs');
-app.set('views', __dirname + '/views');
-
-// Set up route for root URL
+// Set up route for displaying the home page
 app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, '../public/pages/index.html'));
 });
-
-//---------------------------------------------------//
-// Serve the HTML and JavaScript files
-// app.use(express.static('public/pages'));
 
 // Start the server
 const port = 3000;
