@@ -38,7 +38,7 @@ app.get('/table', (req, res) => {
     if (err) throw err;
     const sensorData = results.map(data => {
       const localTime = moment.tz(data.dateTime, 'Africa/Kampala');
-      data.dateTime = localTime.format('DD[/]MM[/]YY - HH:mm:ss');
+      data.dateTime = localTime.format('Do[/]MM[/]YY - HH:mm:ss');
       return data;
     });
     const totalCountQuery = 'SELECT COUNT(*) AS totalCount FROM sensor_data';
