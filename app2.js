@@ -22,6 +22,10 @@ connection.connect((err) => {
   console.log('Connected to MySQL database');
 });
 
+// Middleware
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 // Set up middleware for serving static files and parsing request body
 app.use(express.static(path.join(__dirname, '/public/pages')));
 
@@ -51,6 +55,48 @@ app.get('/table', (req, res) => {
         currentPage,
       });
     });
+  });
+});
+
+// Endpoint to receive sensor data
+app.post('/sensor-data', (req, res) => {
+  const { temperature, humidity, moisture, light } = req.body;
+
+  // Validate inputs
+  if (!temperature || !humidity) {
+      return res.status(400).json({ error: 'Missing input data' });
+  }
+
+  // Insert data into database
+  const sql = `INSERT INTO sensor_data (temperature, humidity, moisture, light) VALUES (${temperature}, ${humidity}, ${moisture}, ${light})`;
+  connection.query(sql, (err, results) => {
+      if (err) {
+          console.error('Error inserting data into database:', err);
+          return res.status(500).json({ error: 'Server error' });
+      }
+
+      res.status(200).json({ message: 'Sensor data saved successfully' });
+  });
+});
+
+// Endpoint to receive actuator data
+app.post('/actuator-data', (req, res) => {
+  const { fanStatus, humidifierStatus, pumpStatus, lightStatus } = req.body;
+
+  // Validate inputs
+  if (!fanStatus || !humidifierStatus || !pumpStatus || !lightStatus) {
+      return res.status(400).json({ error: 'Missing input data' });
+  }
+
+  // Insert data into database
+  const sql = `INSERT INTO actuator_data (fanStatus, humidifierStatus, pumpStatus, lightStatus) VALUES ('${fanStatus}', '${humidifierStatus}', '${pumpStatus}', '${lightStatus}')`;
+  connection.query(sql, (err, results) => {
+      if (err) {
+          console.error('Error inserting data into database:', err);
+          return res.status(500).json({ error: 'Server error' });
+      }
+
+      res.status(200).json({ message: 'Actuator data saved successfully' });
   });
 });
 
