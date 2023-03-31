@@ -107,7 +107,7 @@ app.set('views', __dirname + '/views');
 
 // Set up route for displaying the home page
 app.get('/', (req, res) => {
-  res.sendFile(path.join(__dirname, '/public/pages/index.html'));
+  res.sendFile(path.join(__dirname, '/public/pages/dashboard.html'));
 });
 
 // Start the server
