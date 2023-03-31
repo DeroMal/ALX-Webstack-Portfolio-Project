@@ -36,6 +36,24 @@ app.get('/table', (req, res) => {
   const currentPage = req.query.page || 1; // get current page from query parameter or default to page 1
   const startIndex = (currentPage - 1) * pageSize; // calculate start index of records to display
 
+// Route for getting sensor data
+app.get('/data', (req, res) => {
+  // Query to get latest sensor data from database
+  const query = 'SELECT * FROM sensor_data ORDER BY id DESC LIMIT 1';
+  
+  // Execute query
+  connection.query(query, (error, results) => {
+    if (error) {
+      console.log('Error executing query: ' + error.stack);
+      res.status(500).send('Error retrieving sensor data');
+      return;
+    }
+
+    // Send sensor data as JSON response
+    res.json(results[0]);
+  });
+});
+
   // Query the database for sensor data
   const query = `SELECT * FROM sensor_data ORDER BY id DESC LIMIT ${startIndex},${pageSize}`;
   connection.query(query, (err, results) => {
