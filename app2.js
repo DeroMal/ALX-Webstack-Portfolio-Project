@@ -9,12 +9,22 @@ const moment = require('moment-timezone');
 
 const app = express();
 
+//sets the content type header to application/javascript before sending the file, which should inform the browser that the file contains JavaScript code.
+app.get('/assets/js/:filename', (req, res) => {
+  const filename = req.params.filename;
+  res.set('Content-Type', 'application/javascript');
+  res.sendFile(path.join(__dirname, `/public/assets/js/${filename}`));
+});
+
 // Set up MySQL connection
+const dbCredentials = require('./db');
+
+// Establish database connection using the credentials
 const connection = mysql.createConnection({
-  host: 'localhost',
-  user: 'wlgykctu_derrickml',
-  password: 'derrickloma',
-  database: 'wlgykctu_smartgro'
+  host: dbCredentials.host,
+  user: dbCredentials.user,
+  password: dbCredentials.password,
+  database: dbCredentials.database
 });
 
 // Connect to MySQL
@@ -29,12 +39,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 // Set up middleware for serving static files and parsing request body
 app.use(express.static(path.join(__dirname, '/public/pages')));
-
-// Set up route for displaying paginated sensor data
-app.get('/table', (req, res) => {
-  const pageSize = 10; // number of records to display per page
-  const currentPage = req.query.page || 1; // get current page from query parameter or default to page 1
-  const startIndex = (currentPage - 1) * pageSize; // calculate start index of records to display
 
 // Route for getting sensor data
 app.get('/public/pages', (req, res) => {
@@ -53,6 +57,12 @@ app.get('/public/pages', (req, res) => {
     res.json(results[0]);
   });
 });
+
+// Set up route for displaying paginated sensor data
+app.get('/table', (req, res) => {
+  const pageSize = 10; // number of records to display per page
+  const currentPage = req.query.page || 1; // get current page from query parameter or default to page 1
+  const startIndex = (currentPage - 1) * pageSize; // calculate start index of records to display
 
   // Query the database for sensor data
   const query = `SELECT * FROM sensor_data ORDER BY id DESC LIMIT ${startIndex},${pageSize}`;

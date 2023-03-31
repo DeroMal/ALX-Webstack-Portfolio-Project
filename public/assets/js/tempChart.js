@@ -12,7 +12,7 @@ const chartTemp = {
             borderRadius: 4,
             borderSkipped: false,
             backgroundColor: "rgba(255, 255, 255, .8)",
-            data: [50, 20, 10, 22, 50, 10, 40],
+            data: [],
             maxBarThickness: 6
         },],
     },
@@ -84,21 +84,24 @@ const ctx = document.getElementById('chart-bars').getContext('2d');
 const chart1 = new Chart(ctx, chartTemp);
 
 // Update the temperature chart with new data every 3 seconds
-setInterval(() => {
-    // Generate new random data and add it to the chart
-    const newData = Math.floor(Math.random() * 40);
-    data.push(newData);
-    labels.push(new Date().toLocaleTimeString());
-    if (data.length > 10) {
-        // Remove oldest data if there are more than 10 data points
-        data.shift();
-        labels.shift();
-    }
-    // Update the chart's data and re-render it
-    chartTemp.data.datasets[0].data = data;
-    chartTemp.data.labels = labels;
-    chart1.update();
 
-     // Update the values on the page
-     document.getElementById('tval').innerText = `${newData}°C`;
+let prevId = '';
+setInterval(() => {
+    fetch('/public/pages')
+        .then(response => response.json())
+        .then(data => {
+            const newData = data.temperature;
+            if (data._id !== prevId) {
+                chartTemp.data.datasets[0].data.push(newData);
+                chartTemp.data.labels.push(new Date().toLocaleTimeString());
+                if (chartTemp.data.datasets[0].data.length > 10) {
+                    // Remove oldest data if there are more than 10 data points
+                    chartTemp.data.datasets[0].data.shift();
+                    chartTemp.data.labels.shift();
+                }
+                chart1.update();
+                prevId = data._id;
+            }
+        })
+        .catch(error => console.error(error));
 }, 3000);
