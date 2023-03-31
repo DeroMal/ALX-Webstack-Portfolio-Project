@@ -186,7 +186,7 @@
         </div>
         <script>
           function updateSensorData() {
-            fetch('/data')
+            fetch('/public/pages')
               .then(response => response.json())
               .then(data => {
                 document.getElementById('tval').textContent = data.temperature;
