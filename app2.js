@@ -37,7 +37,7 @@ app.get('/table', (req, res) => {
   const startIndex = (currentPage - 1) * pageSize; // calculate start index of records to display
 
 // Route for getting sensor data
-app.get('/data', (req, res) => {
+app.get('/public/pages', (req, res) => {
   // Query to get latest sensor data from database
   const query = 'SELECT * FROM sensor_data ORDER BY id DESC LIMIT 1';
   
