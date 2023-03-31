@@ -185,16 +185,7 @@
           </div>
         </div>
         <script>
-          function updateSensorData() {
-            fetch('/public/pages')
-              .then(response => response.json())
-              .then(data => {
-                document.getElementById('tval').textContent = data.temperature;
-              })
-              .catch(error => console.error(error));
-          }
-    
-          setInterval(updateSensorData, 1000);
+          src="/assets/js/tval.js"
         </script>
         <div class="col-xl-3 col-sm-6 mb-xl-0 mb-4">
           <div class="card">
