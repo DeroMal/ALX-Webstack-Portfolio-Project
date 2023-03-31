@@ -2,9 +2,9 @@
 
 const dbCredentials = {
     host: 'localhost',
-    user: 'wlgykctu_derrickml',
-    password: 'derrickloma',
-    database: 'wlgykctu_smartgro'
+    user: 'root',
+    password: '',
+    database: 'sensgro'
   };
   
   module.exports = dbCredentials;
