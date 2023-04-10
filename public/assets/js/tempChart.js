@@ -1,20 +1,61 @@
-//Setting Temperature chart configurations
-const data = [];
-const labels = [];
-const chartTemp = {
+// Variables to keep track of the latest reading time and status element
+var latestReadingTime = null;
+var statusElement = document.getElementById("status");
+
+// Function to fetch chart data from the server and update the chart and status
+function updateChart() {
+    // Make an AJAX request to fetch the chart data from the server
+    fetch('/chart-data')
+        .then(response => response.json())
+        .then(data => {
+            // Get the timestamp of the latest reading in the fetched data
+            var latestDataTime = moment(data.dateTime[0], 'MM Do, h:mm:ss a').valueOf();
+            // Check if the latest reading time in the fetched data is newer than the current latest reading time
+            if (!latestReadingTime || latestDataTime > latestReadingTime) {
+                // Calculate the time difference between the latest reading time and the current time
+                var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
+                var timeDiffString = "";
+                if (timeDiff.asSeconds() < 60) {
+                    timeDiffString = "updated " + Math.round(timeDiff.asSeconds()) + " seconds ago";
+                } else if (timeDiff.asMinutes() < 60) {
+                    timeDiffString = "updated " + Math.round(timeDiff.asMinutes()) + " minutes ago";
+                } else if (timeDiff.asHours() < 24) {
+                    timeDiffString = "updated " + Math.round(timeDiff.asHours()) + " hours ago";
+                } else {
+                    var days = Math.floor(timeDiff.asDays());
+                    var hours = Math.floor(timeDiff.asHours() - days * 24);
+                    timeDiffString = "updated " + days + " days";
+                    if (hours > 0) {
+                        timeDiffString += " and " + hours + " hours";
+                    }
+                    timeDiffString += " ago";
+                }
+                // Update the latest reading time and status element
+                latestReadingTime = latestDataTime;
+                statusElement.textContent = "Temperature " + timeDiffString;
+                // Update the chart data
+                chart.data.datasets[0].data = data.temperature;
+                chart.data.labels = data.dateTime;
+                // chart.data.labels = moment(data.dateTime[0], 'MM Do, h:mm:ss a');
+                // Update the chart
+                chart.update();
+            }
+        })
+        .catch(error => console.error(error));
+}
+
+// Create the initial chart using the current data
+var ctx = document.getElementById("tempChart").getContext("2d");
+var chart = new Chart(ctx, {
     type: "bar",
     data: {
-        labels: ["Temp"],
+        labels: [], // Empty initially
         datasets: [{
-            label: "Temp",
-            tension: 0.4,
-            borderWidth: 0,
-            borderRadius: 4,
-            borderSkipped: false,
+            label: "Temperature",
+            data: [], // Empty initially
             backgroundColor: "rgba(255, 255, 255, .8)",
-            data: [],
             maxBarThickness: 6
-        },],
+        }],
     },
     options: {
         responsive: true,
@@ -76,32 +117,8 @@ const chartTemp = {
                 }
             },
         },
-    }
-};
+    },
+});
 
-//Create the temperature chart
-const ctx = document.getElementById('chart-bars').getContext('2d');
-const chart1 = new Chart(ctx, chartTemp);
-
-// Update the temperature chart with new data every 3 seconds
-
-let prevId = '';
-setInterval(() => {
-    fetch('/public/pages')
-        .then(response => response.json())
-        .then(data => {
-            const newData = data.temperature;
-            if (data._id !== prevId) {
-                chartTemp.data.datasets[0].data.push(newData);
-                chartTemp.data.labels.push(new Date().toLocaleTimeString());
-                if (chartTemp.data.datasets[0].data.length > 10) {
-                    // Remove oldest data if there are more than 10 data points
-                    chartTemp.data.datasets[0].data.shift();
-                    chartTemp.data.labels.shift();
-                }
-                chart1.update();
-                prevId = data._id;
-            }
-        })
-        .catch(error => console.error(error));
-}, 3000);
+// Call the updateChart function every 3 seconds
+setInterval(updateChart, 3000);

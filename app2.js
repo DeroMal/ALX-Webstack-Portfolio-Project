@@ -61,14 +61,14 @@ app.get('/public/pages', (req, res) => {
 // ROUTES
 // Route to fetch chart data from database
 app.get('/chart-data', (req, res) => {
-    const sql = 'SELECT * FROM sensor_data ORDER BY dateTime DESC LIMIT 10';
+    const sql = 'SELECT * FROM data ORDER BY date DESC LIMIT 10';
     connection.query(sql, (err, results) => {
         if (err) throw err;
 
         const chartData = {
             humidity: results.map((entry) => entry.humidity),
             temperature: results.map((entry) => entry.temperature),
-            dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm:ss a'))
+            dateTime: results.map((entry) => moment(entry.date).format('MM Do, h:mm a'))
         };
 
         res.json(chartData);

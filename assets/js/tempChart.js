@@ -1,75 +1,79 @@
-// Function to fetch data and update chart
-function fetchDataAndUpdateChart() {
-    // Create a new XMLHttpRequest object
-    const xhr = new XMLHttpRequest();
+var ctx = document.getElementById("tempChart").getContext("2d");
 
-    // Set the HTTP method and URL
-    xhr.open('GET', '/chart-data');
-
-    // Set the response type
-    xhr.responseType = 'json';
-
-    // Set the onload event handler
-    xhr.onload = function() {
-        // Check if the response is OK
-        if (xhr.status === 200) {
-            // Parse the response data
-            const data = xhr.response;
-
-            const chartData = {
-                labels: data.dateTime,
-                datasets: [{
-                    label: 'Humidity',
-                    backgroundColor: 'rgba(54, 162, 235, 0.5)',
-                    data: data.humidity
-                }, {
-                    label: 'Temperature',
-                    backgroundColor: 'rgba(255, 206, 86, 0.5)',
-                    data: data.temperature
-                }]
-            };
-
-            // Update the chart data and options
-            const myChart = Chart.getChart('myChart');
-            myChart.data = chartData;
-            myChart.update({
-                duration: 2000,
-                easing: 'linear',
-                lazy: false
-            });
-        } else {
-            console.error('Error fetching data: ' + xhr.status);
-        }
-    };
-
-    // Send the request
-    xhr.send();
-}
-
-// Create a bar chart
-const ctx = document.getElementById('chart-bars').getContext('2d');
-const myChart = new Chart(ctx, {
-    type: 'bar',
-    data: {},
+new Chart(ctx, {
+    type: "bar",
+    data: {
+        labels: ["M", "T", "W", "T", "F", "S", "S"],
+        datasets: [{
+            label: "Sales",
+            tension: 0.4,
+            borderWidth: 0,
+            borderRadius: 4,
+            borderSkipped: false,
+            backgroundColor: "rgba(255, 255, 255, .8)",
+            data: [50, 20, 10, 22, 50, 10, 40],
+            maxBarThickness: 6
+        }, ],
+    },
     options: {
         responsive: true,
-        scales: {
-            yAxes: [{
-                ticks: {
-                    beginAtZero: true
-                }
-            }]
+        maintainAspectRatio: false,
+        plugins: {
+            legend: {
+                display: false,
+            }
         },
-        animation: {
-            duration: 0 // Disable global chart animation
-        }
+        interaction: {
+            intersect: false,
+            mode: 'index',
+        },
+        scales: {
+            y: {
+                grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5],
+                    color: 'rgba(255, 255, 255, .2)'
+                },
+                ticks: {
+                    suggestedMin: 0,
+                    suggestedMax: 500,
+                    beginAtZero: true,
+                    padding: 10,
+                    font: {
+                        size: 14,
+                        weight: 300,
+                        family: "Roboto",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                    color: "#fff"
+                },
+            },
+            x: {
+                grid: {
+                    drawBorder: false,
+                    display: true,
+                    drawOnChartArea: true,
+                    drawTicks: false,
+                    borderDash: [5, 5],
+                    color: 'rgba(255, 255, 255, .2)'
+                },
+                ticks: {
+                    display: true,
+                    color: '#f8f9fa',
+                    padding: 10,
+                    font: {
+                        size: 14,
+                        weight: 300,
+                        family: "Roboto",
+                        style: 'normal',
+                        lineHeight: 2
+                    },
+                }
+            },
+        },
     },
-    // Set the chart ID
-    id: 'chart-bars'
 });
-
-// Call the function initially to fetch and display the data
-fetchDataAndUpdateChart();
-
-// Call the function every 3 seconds using setInterval()
-setInterval(fetchDataAndUpdateChart, 3000);
