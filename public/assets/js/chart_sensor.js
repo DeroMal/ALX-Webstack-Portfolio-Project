@@ -16,6 +16,12 @@ function fetchChartData() {
     fetch('/chart-data2')
         .then(response => response.json())
         .then(data => {
+            //Update single sensor readings
+            document.getElementById('tval').textContent = data.temperatureData.temperature[0];
+            document.getElementById('hval').textContent = data.humidityData.humidity[0];
+            // document.getElementById('mval').textContent = data.moisture[0];
+            document.getElementById('lval').textContent = data.lightData.light[0];
+
             // Update temperature status and chart data 
             var latestDataTime = moment(data.temperatureData.dateTime[0], 'MM Do, h:mm a').valueOf();
             if (!latestDataTimeTemp || latestDataTime > latestDataTimeTemp) {
@@ -329,14 +335,14 @@ chartLight = new Chart(
     }
 );
 
-setInterval(() => {
-    fetch('/chart-data2')
-        .then(response => response.json())
-        .then(data => {
-            document.getElementById('tval').textContent = data.temperatureData.temperature[0];
-            document.getElementById('hval').textContent = data.humidityData.humidity[0];
-            // document.getElementById('mval').textContent = data.moisture[0];
-            document.getElementById('lval').textContent = data.lightData.light[0];
-        })
-        .catch(error => console.error(error));
-}, 2000);
+// setInterval(() => {
+//     fetch('/chart-data2')
+//         .then(response => response.json())
+//         .then(data => {
+//             document.getElementById('tval').textContent = data.temperatureData.temperature[0];
+//             document.getElementById('hval').textContent = data.humidityData.humidity[0];
+//             // document.getElementById('mval').textContent = data.moisture[0];
+//             document.getElementById('lval').textContent = data.lightData.light[0];
+//         })
+//         .catch(error => console.error(error));
+// }, 2000);
