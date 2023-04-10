@@ -28,7 +28,7 @@ function fetchChartData() {
                 latestDataTimeTemp = latestDataTime;
                 var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
                 var timeDiffString = getTimeDiffString(timeDiff);
-                statusElementTemp.textContent = timeDiffString;
+                statusElementTemp.textContent = "updated " + timeDiffString;
                 updateChartTemp(data.temperatureData);
             }
 
@@ -38,7 +38,7 @@ function fetchChartData() {
                 latestDataTimeHumidity = latestDataTime;
                 var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
                 var timeDiffString = getTimeDiffString(timeDiff);
-                statusElementHumidity.textContent = timeDiffString;
+                statusElementHumidity.textContent = "updated " + timeDiffString;
                 updateChartHumidity(data.humidityData);
             }
 
@@ -48,7 +48,7 @@ function fetchChartData() {
                 latestDataTimeLight = latestDataTime;
                 var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
                 var timeDiffString = getTimeDiffString(timeDiff);
-                statusElementLight.textContent = timeDiffString;
+                statusElementLight.textContent = "updated " + timeDiffString;
                 updateChartLight(data.lightData);
             }
         });

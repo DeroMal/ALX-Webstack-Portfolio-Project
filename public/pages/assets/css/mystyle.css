@@ -1,5 +1,25 @@
 /* START HERO */
 
+.user-readings-container {
+    background-size: cover;
+    background-blend-mode: multiply;
+    background-color: rgb(0, 0, 0);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;
+    padding: 10px;
+}
+
+.user-readings-header {
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.user-readings-title {
+    color: white;
+    font-size: 26px;
+    font-weight: bold;
+}
+
 .sensor-readings-container {
     background-image: url('product-6-min.jpg');
     background-size: cover;
