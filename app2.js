@@ -61,19 +61,64 @@ app.get('/public/pages', (req, res) => {
 // ROUTES
 // Route to fetch chart data from database
 app.get('/chart-data', (req, res) => {
-    const sql = 'SELECT * FROM data ORDER BY date DESC LIMIT 10';
+    const sql = 'SELECT * FROM sensor_data ORDER BY dateTime DESC LIMIT 10';
     connection.query(sql, (err, results) => {
         if (err) throw err;
 
         const chartData = {
             humidity: results.map((entry) => entry.humidity),
             temperature: results.map((entry) => entry.temperature),
-            dateTime: results.map((entry) => moment(entry.date).format('MM Do, h:mm a'))
+            light: results.map((entry) => entry.light),
+            dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
         };
 
         res.json(chartData);
     });
 });
+//Chart-2
+app.get('/chart-data2', (req, res) => {
+    const humiditySql = 'SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT 10';
+    const temperatureSql = 'SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT 10';
+    const lightSql = 'SELECT * FROM light_data ORDER BY dateTime DESC LIMIT 10';
+
+    let humidityData, temperatureData, lightData;
+
+    connection.query(temperatureSql, (err, results) => {
+        if (err) throw err;
+
+        temperatureData = {
+            temperature: results.map((entry) => entry.temperature),
+            dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+        };
+
+        connection.query(humiditySql, (err, results) => {
+            if (err) throw err;
+
+            humidityData = {
+                humidity: results.map((entry) => entry.humidity),
+                dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+            };
+
+            connection.query(lightSql, (err, results) => {
+                if (err) throw err;
+
+                lightData = {
+                    light: results.map((entry) => entry.light),
+                    dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+                };
+
+                const chartData = {
+                    humidityData,
+                    temperatureData,
+                    lightData
+                };
+
+                res.json(chartData);
+            });
+        });
+    });
+});
+
 // Set up route for displaying paginated sensor data
 app.get('/table', (req, res) => {
     const pageSize = 10; // number of records to display per page

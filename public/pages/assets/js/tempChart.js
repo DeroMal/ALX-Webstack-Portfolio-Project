@@ -1,104 +1,443 @@
-//Setting Temperature chart configurations
-const data = [];
-const labels = [];
-const chartTemp = {
-    type: "bar",
-    data: {
-        labels: ["Temp"],
-        datasets: [{
-            label: "Temp",
-            tension: 0.4,
-            borderWidth: 0,
-            borderRadius: 4,
-            borderSkipped: false,
-            backgroundColor: "rgba(255, 255, 255, .8)",
-            data: [50, 20, 10, 22, 50, 10, 40],
-            maxBarThickness: 6
-        },],
-    },
-    options: {
-        responsive: true,
-        maintainAspectRatio: false,
-        plugins: {
-            legend: {
-                display: false,
-            }
-        },
-        interaction: {
-            intersect: false,
-            mode: 'index',
-        },
-        scales: {
-            y: {
-                grid: {
-                    drawBorder: false,
-                    display: true,
-                    drawOnChartArea: true,
-                    drawTicks: false,
-                    borderDash: [5, 5],
-                    color: 'rgba(255, 255, 255, .2)'
-                },
-                ticks: {
-                    suggestedMin: 0,
-                    suggestedMax: 500,
-                    beginAtZero: true,
-                    padding: 10,
-                    font: {
-                        size: 14,
-                        weight: 300,
-                        family: "Roboto",
-                        style: 'normal',
-                        lineHeight: 2
-                    },
-                    color: "#fff"
-                },
-            },
-            x: {
-                grid: {
-                    drawBorder: false,
-                    display: true,
-                    drawOnChartArea: true,
-                    drawTicks: false,
-                    borderDash: [5, 5],
-                    color: 'rgba(255, 255, 255, .2)'
-                },
-                ticks: {
-                    display: true,
-                    color: '#f8f9fa',
-                    padding: 10,
-                    font: {
-                        size: 14,
-                        weight: 300,
-                        family: "Roboto",
-                        style: 'normal',
-                        lineHeight: 2
-                    },
+var chart;
+var chartH;
+var chartL;
+// Variables to keep track of the latest reading time and status element
+var latestReadingTime = null;
+var statusElement = document.getElementById("status");
+var statusElementH = document.getElementById("statusH");
+var statusElementL = document.getElementById("statusL");
+
+// Function to fetch chart data from the server and update the chart and status
+function updateChart() {
+    // Make an AJAX request to fetch the chart data from the server
+    fetch('/chart-data')
+        .then(response => response.json())
+        .then(data => {
+            // Get the timestamp of the latest reading in the fetched data
+            var latestDataTime = moment(data.dateTime[0], 'MM Do, h:mm:ss a').valueOf();
+            // Check if the latest reading time in the fetched data is newer than the current latest reading time
+            if (!latestReadingTime || latestDataTime > latestReadingTime) {
+                // Calculate the time difference between the latest reading time and the current time
+                var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
+                var timeDiffString = "";
+                if (timeDiff.asSeconds() < 60) {
+                    timeDiffString = "updated " + Math.round(timeDiff.asSeconds()) + " seconds ago";
+                } else if (timeDiff.asMinutes() < 60) {
+                    timeDiffString = "updated " + Math.round(timeDiff.asMinutes()) + " minutes ago";
+                } else if (timeDiff.asHours() < 24) {
+                    timeDiffString = "updated " + Math.round(timeDiff.asHours()) + " hours ago";
+                } else {
+                    var days = Math.floor(timeDiff.asDays());
+                    var hours = Math.floor(timeDiff.asHours() - days * 24);
+                    timeDiffString = "updated " + days + " days";
+                    if (hours > 0) {
+                        timeDiffString += " and " + hours + " hours";
+                    }
+                    timeDiffString += " ago";
                 }
-            },
-        },
-    }
-};
+                // Update the latest reading time and status element
+                latestReadingTime = latestDataTime;
+                statusElement.textContent = timeDiffString;
+                statusElementH.textContent = timeDiffString;
+                statusElementL.textContent = timeDiffString;
 
-//Create the temperature chart
-const ctx = document.getElementById('chart-bars').getContext('2d');
-const chart1 = new Chart(ctx, chartTemp);
+                // Update the chart data
+                if (chart) {
+                    chart.destroy();
+                }
 
-// Update the temperature chart with new data every 3 seconds
-setInterval(() => {
-    // Generate new random data and add it to the chart
-    const newData = Math.floor(Math.random() * 40);
-    data.push(newData);
-    labels.push(new Date().toLocaleTimeString());
-    if (data.length > 10) {
-        // Remove oldest data if there are more than 10 data points
-        data.shift();
-        labels.shift();
-    }
-    // Update the chart's data and re-render it
-    chartTemp.data.datasets[0].data = data;
-    chartTemp.data.labels = labels;
-    chart1.update();
+                if (chartH) {
+                    chartH.destroy();
+                }
 
-     // Update the values on the page
-     document.getElementById('tval').innerText = `${newData}°C`;
-}, 3000);
+                if (chartL) {
+                    chartL.destroy();
+                }
+
+                // Create the initial charts using the current data
+                var ctx = document.getElementById("tempChart").getContext("2d");
+                chart = new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: data.dateTime, // Empty initially
+                        datasets: [{
+                            label: "Temperature",
+                            data: data.temperature, // Empty initially
+                            backgroundColor: "rgba(255, 255, 255, .8)",
+                            maxBarThickness: 6
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5],
+                                    color: 'rgba(255, 255, 255, .2)'
+                                },
+                                ticks: {
+                                    suggestedMin: 0,
+                                    suggestedMax: 500,
+                                    beginAtZero: true,
+                                    padding: 10,
+                                    font: {
+                                        size: 14,
+                                        weight: 300,
+                                        family: "Roboto",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                    color: "#fff"
+                                },
+                            },
+                            x: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5],
+                                    color: 'rgba(255, 255, 255, .2)'
+                                },
+                                ticks: {
+                                    display: true,
+                                    color: '#f8f9fa',
+                                    padding: 10,
+                                    font: {
+                                        size: 14,
+                                        weight: 300,
+                                        family: "Roboto",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                }
+                            },
+                        },
+                    },
+                });
+
+                // Create the initial humidity chart using the current data
+                var ctxH = document.getElementById("humidChart").getContext("2d");
+                chartH = new Chart(ctxH, {
+                    type: "line",
+                    data: {
+                        labels: data.dateTime, // Empty initially
+                        datasets: [{
+                            label: "Humidity",
+                            data: data.humidity, // Empty initially
+                            backgroundColor: "rgba(255, 255, 255, .8)",
+                            maxBarThickness: 6
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5],
+                                    color: 'rgba(255, 255, 255, .2)'
+                                },
+                                ticks: {
+                                    suggestedMin: 0,
+                                    suggestedMax: 500,
+                                    beginAtZero: true,
+                                    padding: 10,
+                                    font: {
+                                        size: 14,
+                                        weight: 300,
+                                        family: "Roboto",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                    color: "#fff"
+                                },
+                            },
+                            x: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5],
+                                    color: 'rgba(255, 255, 255, .2)'
+                                },
+                                ticks: {
+                                    display: true,
+                                    color: '#f8f9fa',
+                                    padding: 10,
+                                    font: {
+                                        size: 14,
+                                        weight: 300,
+                                        family: "Roboto",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                }
+                            },
+                        },
+                    },
+                });
+
+                // Create the initial Light chart using the current data
+                var ctx3 = document.getElementById("lightChart").getContext("2d");
+                chartL = new Chart(ctx3, {
+                    type: "line",
+                    data: {
+                        labels: data.dateTime, // Empty initially
+                        datasets: [{
+                            label: "Light Intensity",
+                            data: data.light, // Empty initially
+                            backgroundColor: "rgba(255, 255, 255, .8)",
+                            maxBarThickness: 6
+                        }],
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: false,
+                            }
+                        },
+                        interaction: {
+                            intersect: false,
+                            mode: 'index',
+                        },
+                        scales: {
+                            y: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5],
+                                    color: 'rgba(255, 255, 255, .2)'
+                                },
+                                ticks: {
+                                    suggestedMin: 0,
+                                    suggestedMax: 500,
+                                    beginAtZero: true,
+                                    padding: 10,
+                                    font: {
+                                        size: 14,
+                                        weight: 300,
+                                        family: "Roboto",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                    color: "#fff"
+                                },
+                            },
+                            x: {
+                                grid: {
+                                    drawBorder: false,
+                                    display: true,
+                                    drawOnChartArea: true,
+                                    drawTicks: false,
+                                    borderDash: [5, 5],
+                                    color: 'rgba(255, 255, 255, .2)'
+                                },
+                                ticks: {
+                                    display: true,
+                                    color: '#f8f9fa',
+                                    padding: 10,
+                                    font: {
+                                        size: 14,
+                                        weight: 300,
+                                        family: "Roboto",
+                                        style: 'normal',
+                                        lineHeight: 2
+                                    },
+                                }
+                            },
+                        },
+                    },
+                });
+
+            }
+        })
+        .catch(error => console.error(error));
+}
+
+// // Create the initial chart using the current data
+// var ctx = document.getElementById("tempChart").getContext("2d");
+// var chart = new Chart(ctx, {
+//     type: "bar",
+//     data: {
+//         labels: [], // Empty initially
+//         datasets: [{
+//             label: "Temperature",
+//             data: [], // Empty initially
+//             backgroundColor: "rgba(255, 255, 255, .8)",
+//             maxBarThickness: 6
+//         }],
+//     },
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         plugins: {
+//             legend: {
+//                 display: false,
+//             }
+//         },
+//         interaction: {
+//             intersect: false,
+//             mode: 'index',
+//         },
+//         scales: {
+//             y: {
+//                 grid: {
+//                     drawBorder: false,
+//                     display: true,
+//                     drawOnChartArea: true,
+//                     drawTicks: false,
+//                     borderDash: [5, 5],
+//                     color: 'rgba(255, 255, 255, .2)'
+//                 },
+//                 ticks: {
+//                     suggestedMin: 0,
+//                     suggestedMax: 500,
+//                     beginAtZero: true,
+//                     padding: 10,
+//                     font: {
+//                         size: 14,
+//                         weight: 300,
+//                         family: "Roboto",
+//                         style: 'normal',
+//                         lineHeight: 2
+//                     },
+//                     color: "#fff"
+//                 },
+//             },
+//             x: {
+//                 grid: {
+//                     drawBorder: false,
+//                     display: true,
+//                     drawOnChartArea: true,
+//                     drawTicks: false,
+//                     borderDash: [5, 5],
+//                     color: 'rgba(255, 255, 255, .2)'
+//                 },
+//                 ticks: {
+//                     display: true,
+//                     color: '#f8f9fa',
+//                     padding: 10,
+//                     font: {
+//                         size: 14,
+//                         weight: 300,
+//                         family: "Roboto",
+//                         style: 'normal',
+//                         lineHeight: 2
+//                     },
+//                 }
+//             },
+//         },
+//     },
+// });
+
+// // Create the initial chart using the current data
+// var ctxH = document.getElementById("humidChart").getContext("2d");
+// var chartH = new Chart(ctx, {
+//     type: "line",
+//     data: {
+//         labels: [], // Empty initially
+//         datasets: [{
+//             label: "Humidity",
+//             data: [], // Empty initially
+//             backgroundColor: "rgba(255, 255, 255, .8)",
+//             maxBarThickness: 6
+//         }],
+//     },
+//     options: {
+//         responsive: true,
+//         maintainAspectRatio: false,
+//         plugins: {
+//             legend: {
+//                 display: false,
+//             }
+//         },
+//         interaction: {
+//             intersect: false,
+//             mode: 'index',
+//         },
+//         scales: {
+//             y: {
+//                 grid: {
+//                     drawBorder: false,
+//                     display: true,
+//                     drawOnChartArea: true,
+//                     drawTicks: false,
+//                     borderDash: [5, 5],
+//                     color: 'rgba(255, 255, 255, .2)'
+//                 },
+//                 ticks: {
+//                     suggestedMin: 0,
+//                     suggestedMax: 500,
+//                     beginAtZero: true,
+//                     padding: 10,
+//                     font: {
+//                         size: 14,
+//                         weight: 300,
+//                         family: "Roboto",
+//                         style: 'normal',
+//                         lineHeight: 2
+//                     },
+//                     color: "#fff"
+//                 },
+//             },
+//             x: {
+//                 grid: {
+//                     drawBorder: false,
+//                     display: true,
+//                     drawOnChartArea: true,
+//                     drawTicks: false,
+//                     borderDash: [5, 5],
+//                     color: 'rgba(255, 255, 255, .2)'
+//                 },
+//                 ticks: {
+//                     display: true,
+//                     color: '#f8f9fa',
+//                     padding: 10,
+//                     font: {
+//                         size: 14,
+//                         weight: 300,
+//                         family: "Roboto",
+//                         style: 'normal',
+//                         lineHeight: 2
+//                     },
+//                 }
+//             },
+//         },
+//     },
+// });
+
+// Call the updateChart function every 3 seconds
+setInterval(updateChart, 500);
