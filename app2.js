@@ -9,6 +9,12 @@ const moment = require('moment-timezone');
 
 const app = express();
 
+app.use(function(req, res, next) {
+    res.header("Access-Control-Allow-Origin", "https://sensgro.rec22test.site/");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+    next();
+});
+
 //sets the content type header to application/javascript before sending the file, which should inform the browser that the file contains JavaScript code.
 app.get('/assets/js/:filename', (req, res) => {
     const filename = req.params.filename;
