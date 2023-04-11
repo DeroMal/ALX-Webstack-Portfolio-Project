@@ -96,7 +96,7 @@ app.get('/chart-data2', (req, res) => {
 
         temperatureData = {
             temperature: results.map((entry) => entry.temperature),
-            dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+            dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC+2').tz(timezone).format('MM Do, h:mm a'))
         };
 
         connection.query(humiditySql, (err, results) => {
@@ -104,7 +104,7 @@ app.get('/chart-data2', (req, res) => {
 
             humidityData = {
                 humidity: results.map((entry) => entry.humidity),
-                dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+                dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC+2').tz(timezone).format('MM Do, h:mm a'))
             };
 
             connection.query(lightSql, (err, results) => {
@@ -112,7 +112,7 @@ app.get('/chart-data2', (req, res) => {
 
                 lightData = {
                     light: results.map((entry) => entry.light),
-                    dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+                    dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC+2').tz(timezone).format('MM Do, h:mm a'))
                 };
 
                 const chartData = {
