@@ -7,6 +7,8 @@ const mysql = require('mysql');
 const ejs = require('ejs');
 const moment = require('moment-timezone');
 
+const timezone = 'Africa/Kampala';
+
 const app = express();
 
 app.use(function(req, res, next) {
@@ -75,7 +77,7 @@ app.get('/chart-data', (req, res) => {
             humidity: results.map((entry) => entry.humidity),
             temperature: results.map((entry) => entry.temperature),
             light: results.map((entry) => entry.light),
-            dateTime: results.map((entry) => moment(entry.dateTime).format('MM Do, h:mm a'))
+            dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC+2').tz(timezone).format('MM Do, h:mm a'))
         };
 
         res.json(chartData);
