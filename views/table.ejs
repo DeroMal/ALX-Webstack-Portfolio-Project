@@ -26,6 +26,13 @@
             width: 100%;
         }
         
+        #tTable,
+        #lTable,
+        #hTable {
+            background-color: #ffffff77;
+            border-radius: 10%;
+        }
+        
         th,
         td {
             text-align: left;
@@ -37,6 +44,16 @@
             background-color: #4CAF50;
             color: white;
         }
+        
+        th,
+        td {
+            text-align: center;
+            vertical-align: middle;
+        }
+        /*td.timestamp {
+            border-left: 1px solid #ccc;
+            border-right: 1px solid #ccc;
+        }*/
         
         .pagination {
             display: inline-block;
@@ -128,11 +145,217 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <div class="row">
+                <div class="row mt-4">
+                    <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                <h6 class="text-white text-capitalize ps-3">Temperature</h6>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-2" id="tTable">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date and Time</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Temperature</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i = 0; i < tempData.length; i++) { %>
+                                            <tr>
+                                                <td class="timestamp">
+                                                    <%= tempData[i].dateTime %>
+                                                </td>
+                                                <td>
+                                                    <%= tempData[i].temperature %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="pagination">
+                            <% if (tempCurrentPage > 1) { %>
+                                <a href="?temp_page=<%= tempCurrentPage - 1 %>">&laquo; Prev</a>
+                                <% } %>
+                                    <% let tempWindowStart = Math.max(1, tempCurrentPage - 2); %>
+                                        <% let tempWindowEnd = Math.min(tempWindowStart + 4, tempPageCount); %>
+                                            <% if (tempWindowStart > 1) { %>
+                                                <a href="?temp_page=1">1</a>
+                                                <% if (tempWindowStart > 2) { %>
+                                                    <span>...</span>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% for (let i = tempWindowStart; i <= tempWindowEnd; i++) { %>
+                                                                <% if (i === parseInt(tempCurrentPage)) { %>
+                                                                    <a href="#" class="active">
+                                                                        <%= i %>
+                                                                    </a>
+                                                                    <% } else { %>
+                                                                        <a href="?temp_page=<%= i %>">
+                                                                            <%= i %>
+                                                                        </a>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                                                <% if (tempWindowEnd < tempPageCount) { %>
+                                                                                    <% if (tempWindowEnd < tempPageCount - 1) { %>
+                                                                                        <span>...</span>
+                                                                                        <% } %>
+                                                                                            <a href="?temp_page=<%= tempPageCount %>">
+                                                                                                <%= tempPageCount %>
+                                                                                            </a>
+                                                                                            <% } %>
+                                                                                                <% if (tempCurrentPage < tempPageCount) { %>
+                                                                                                    <a href="?temp_page=<%= tempCurrentPage + 1 %>">Next &raquo;</a>
+                                                                                                    <% } %>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                <h6 class="text-white text-capitalize ps-3">Humidity</h6>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-2" id="hTable">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date and Time</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Humidity</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i = 0; i < humidData.length; i++) { %>
+                                            <tr>
+                                                <td class="timestamp">
+                                                    <%= humidData[i].dateTime %>
+                                                </td>
+                                                <td>
+                                                    <%= humidData[i].humidity %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="pagination">
+                            <% if (humidCurrentPage > 1) { %>
+                                <a href="?page=<%= currentPage - 1 %>">&laquo; Prev</a>
+                                <% } %>
+                                    <% let humidWindowStart = Math.max(1, humidCurrentPage - 2); %>
+                                        <% let humidWindowEnd = Math.min(humidWindowStart + 4, humidPageCount); %>
+                                            <% if (humidWindowStart > 1) { %>
+                                                <a href="?page=1">1</a>
+                                                <% if (humidWindowStart > 2) { %>
+                                                    <span>...</span>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% for (let i = humidWindowStart; i <= humidWindowEnd; i++) { %>
+                                                                <% if (i === parseInt(humidCurrentPage)) { %>
+                                                                    <a href="#" class="active">
+                                                                        <%= i %>
+                                                                    </a>
+                                                                    <% } else { %>
+                                                                        <a href="?page=<%= i %>">
+                                                                            <%= i %>
+                                                                        </a>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                                                <% if (humidWindowEnd < humidPageCount) { %>
+                                                                                    <% if (humidWindowEnd < humidPageCount - 1) { %>
+                                                                                        <span>...</span>
+                                                                                        <% } %>
+                                                                                            <a href="?page=<%= pageCount %>">
+                                                                                                <%= humidPageCount %>
+                                                                                            </a>
+                                                                                            <% } %>
+                                                                                                <% if (humidCurrentPage < humidPageCount) { %>
+                                                                                                    <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                                                                                                    <% } %>
+                        </div>
+
+                    </div>
+                    <div class="col-lg-4 col-md-6 mt-4 mb-4">
+                        <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
+                            <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
+                                <h6 class="text-white text-capitalize ps-3">Light</h6>
+                            </div>
+                        </div>
+                        <div class="card-body px-0 pb-2" id="lTable">
+                            <div class="table-responsive p-0">
+                                <table class="table align-items-center mb-0" id="lTable">
+                                    <thead>
+                                        <tr>
+                                            <th class="text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Date and Time</th>
+                                            <th class="text-center text-uppercase text-secondary text-xxs font-weight-bolder opacity-7">Light</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <% for (let i = 0; i < lightData.length; i++) { %>
+                                            <tr>
+                                                <td class="timestamp">
+                                                    <%= lightData[i].dateTime %>
+                                                </td>
+                                                <td>
+                                                    <%= lightData[i].light %>
+                                                </td>
+                                            </tr>
+                                            <% } %>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="pagination">
+                            <% if (lightCurrentPage > 1) { %>
+                                <a href="?page=<%= currentPage - 1 %>">&laquo; Prev</a>
+                                <% } %>
+                                    <% let lightWindowStart = Math.max(1, lightCurrentPage - 2); %>
+                                        <% let lightWindowEnd = Math.min(lightWindowStart + 4, lightPageCount); %>
+                                            <% if (lightWindowStart > 1) { %>
+                                                <a href="?page=1">1</a>
+                                                <% if (lightWindowStart > 2) { %>
+                                                    <span>...</span>
+                                                    <% } %>
+                                                        <% } %>
+                                                            <% for (let i = lightWindowStart; i <= lightWindowEnd; i++) { %>
+                                                                <% if (i === parseInt(lightCurrentPage)) { %>
+                                                                    <a href="#" class="active">
+                                                                        <%= i %>
+                                                                    </a>
+                                                                    <% } else { %>
+                                                                        <a href="?page=<%= i %>">
+                                                                            <%= i %>
+                                                                        </a>
+                                                                        <% } %>
+                                                                            <% } %>
+                                                                                <% if (lightWindowEnd < lightPageCount) { %>
+                                                                                    <% if (lightWindowEnd < lightPageCount - 1) { %>
+                                                                                        <span>...</span>
+                                                                                        <% } %>
+                                                                                            <a href="?page=<%= pageCount %>">
+                                                                                                <%= lightPageCount %>
+                                                                                            </a>
+                                                                                            <% } %>
+                                                                                                <% if (lightCurrentPage < lightPageCount) { %>
+                                                                                                    <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
+                                                                                                    <% } %>
+                        </div>
+
+                    </div>
+                </div>
                 <div class="col-12">
                     <div class="card my-4">
                         <div class="card-header p-0 position-relative mt-n4 mx-3 z-index-2">
                             <div class="bg-gradient-primary shadow-primary border-radius-lg pt-4 pb-3">
-                                <h6 class="text-white text-capitalize ps-3">Sensor Readings</h6>
+                                <h6 class="text-white text-capitalize ps-3">All Sensor Readings</h6>
                             </div>
                         </div>
                         <div class="card-body px-0 pb-2">
@@ -153,7 +376,7 @@
                                                 <td>
                                                     <%= sensorData[i].id %>
                                                 </td>
-                                                <td>
+                                                <td class="timestamp">
                                                     <%= sensorData[i].dateTime %>
                                                 </td>
                                                 <td>
@@ -174,7 +397,7 @@
                                 <a href="?page=<%= currentPage - 1 %>">&laquo; Prev</a>
                                 <% } %>
                                     <% let windowStart = Math.max(1, currentPage - 2); %>
-                                        <% let windowEnd = Math.min(windowStart + 4, pageCount); %>
+                                        <% let windowEnd = Math.min(windowStart + 4, sensorPageCount); %>
                                             <% if (windowStart > 1) { %>
                                                 <a href="?page=1">1</a>
                                                 <% if (windowStart > 2) { %>
@@ -192,15 +415,15 @@
                                                                         </a>
                                                                         <% } %>
                                                                             <% } %>
-                                                                                <% if (windowEnd < pageCount) { %>
-                                                                                    <% if (windowEnd < pageCount - 1) { %>
+                                                                                <% if (windowEnd < sensorPageCount) { %>
+                                                                                    <% if (windowEnd < sensorPageCount - 1) { %>
                                                                                         <span>...</span>
                                                                                         <% } %>
                                                                                             <a href="?page=<%= pageCount %>">
-                                                                                                <%= pageCount %>
+                                                                                                <%= sensorPageCount %>
                                                                                             </a>
                                                                                             <% } %>
-                                                                                                <% if (currentPage < pageCount) { %>
+                                                                                                <% if (currentPage < sensorPageCount) { %>
                                                                                                     <a href="?page=<%= currentPage + 1 %>">Next &raquo;</a>
                                                                                                     <% } %>
                         </div>
@@ -235,14 +458,6 @@
             </footer>
         </div>
     </main>
-    <!-- <div id="float_settings"></div> -->
-    <script>
-        // const menuDiv = document.getElementById('float_settings');
-
-        // fetch('parts/float_settings.html')
-        //   .then(response => response.text())
-        //  .then(html => menuDiv.innerHTML = html);
-    </script>
     <div class="fixed-plugin">
         <a class="fixed-plugin-button text-dark position-fixed px-3 py-2">
             <i class="material-icons py-2">settings</i>
@@ -250,7 +465,7 @@
         <div class="card shadow-lg">
             <div class="card-header pb-0 pt-3">
                 <div class="float-start">
-                    <h5 class="mt-3 mb-0">Material UI Configurator</h5>
+                    <h5 class="mt-3 mb-0">CaelumSense Configurator</h5>
                     <p>See our dashboard options.</p>
                 </div>
                 <div class="float-end mt-4">

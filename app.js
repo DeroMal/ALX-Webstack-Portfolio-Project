@@ -127,30 +127,111 @@ app.get('/chart-data2', (req, res) => {
     });
 });
 
-// Set up route for displaying paginated sensor data
+// Route handler for displaying paginated sensor data
 app.get('/table', (req, res) => {
     const pageSize = 10; // number of records to display per page
     const currentPage = req.query.page || 1; // get current page from query parameter or default to page 1
     const startIndex = (currentPage - 1) * pageSize; // calculate start index of records to display
 
     // Query the database for sensor data
-    const query = `SELECT * FROM sensor_data ORDER BY id DESC LIMIT ${startIndex},${pageSize}`;
-    connection.query(query, (err, results) => {
+    const sensorDataQuery = `SELECT * FROM sensor_data ORDER BY id DESC LIMIT ${startIndex},${pageSize}`;
+    connection.query(sensorDataQuery, (err, sensorDataResults) => {
         if (err) throw err;
-        const sensorData = results.map(data => {
+
+        const sensorData = sensorDataResults.map(data => {
             const localTime = moment.tz(data.dateTime, 'Africa/Kampala');
             data.dateTime = localTime.format('Do[/]MM[/]YY - HH:mm:ss');
             return data;
         });
-        const totalCountQuery = 'SELECT COUNT(*) AS totalCount FROM sensor_data';
-        connection.query(totalCountQuery, (err, result) => {
+
+        const sensorTotalCountQuery = 'SELECT COUNT(*) AS totalCount FROM sensor_data';
+        connection.query(sensorTotalCountQuery, (err, sensorTotalCountResult) => {
             if (err) throw err;
-            const totalCount = result[0].totalCount;
-            const pageCount = Math.ceil(totalCount / pageSize);
-            res.render('table', {
-                sensorData,
-                pageCount,
-                currentPage,
+            const sensorTotalCount = sensorTotalCountResult[0].totalCount;
+            const sensorPageCount = Math.ceil(sensorTotalCount / pageSize);
+
+            // Query the database for temperature data
+            const tempPageSize = 5; // number of records to display per page
+            const tempCurrentPage = req.query.page || 1; // get current page from query parameter or default to page 1
+            const tempStartIndex = (tempCurrentPage - 1) * tempPageSize; // calculate start index of records to display
+
+            const tempDataQuery = `SELECT * FROM temperature_data ORDER BY id DESC LIMIT ${tempStartIndex},${tempPageSize}`;
+            connection.query(tempDataQuery, (err, tempDataResults) => {
+                if (err) throw err;
+
+                const tempData = tempDataResults.map(data => {
+                    const localTime = moment.tz(data.dateTime, 'Africa/Kampala');
+                    data.dateTime = localTime.format('Do[/]MM[/]YY - HH:mm');
+                    return data;
+                });
+
+                const tempTotalCountQuery = 'SELECT COUNT(*) AS totalCount FROM temperature_data';
+                connection.query(tempTotalCountQuery, (err, tempTotalCountResult) => {
+                    if (err) throw err;
+                    const tempTotalCount = tempTotalCountResult[0].totalCount;
+                    const tempPageCount = Math.ceil(tempTotalCount / tempPageSize);
+
+                    // Query the database for humidity data
+                    const humidPageSize = 5; // number of records to display per page
+                    const humidCurrentPage = req.query.page || 1; // get current page from query parameter or default to page 1
+                    const humidStartIndex = (humidCurrentPage - 1) * humidPageSize; // calculate start index of records to display
+
+                    const humidDataQuery = `SELECT * FROM humidity_data ORDER BY id DESC LIMIT ${humidStartIndex},${humidPageSize}`;
+                    connection.query(humidDataQuery, (err, humidDataResults) => {
+                        if (err) throw err;
+
+                        const humidData = humidDataResults.map(data => {
+                            const localTime = moment.tz(data.dateTime, 'Africa/Kampala');
+                            data.dateTime = localTime.format('Do[/]MM[/]YY - HH:mm');
+                            return data;
+                        });
+
+                        const humidTotalCountQuery = 'SELECT COUNT(*) AS totalCount FROM humidity_data';
+                        connection.query(humidTotalCountQuery, (err, humidTotalCountResult) => {
+                            if (err) throw err;
+                            const humidTotalCount = humidTotalCountResult[0].totalCount;
+                            const humidPageCount = Math.ceil(humidTotalCount / humidPageSize);
+
+                            // Query the database for humidity data
+                            const lightPageSize = 5; // number of records to display per page
+                            const lightCurrentPage = req.query.page || 1; // get current page from query parameter or default to page 1
+                            const lightStartIndex = (lightCurrentPage - 1) * lightPageSize; // calculate start index of records to display
+
+                            const lightDataQuery = `SELECT * FROM light_data ORDER BY id DESC LIMIT ${lightStartIndex},${lightPageSize}`;
+                            connection.query(lightDataQuery, (err, lightDataResults) => {
+                                if (err) throw err;
+
+                                const lightData = lightDataResults.map(data => {
+                                    const localTime = moment.tz(data.dateTime, 'Africa/Kampala');
+                                    data.dateTime = localTime.format('Do[/]MM[/]YY - HH:mm');
+                                    return data;
+                                });
+
+                                const lightTotalCountQuery = 'SELECT COUNT(*) AS totalCount FROM light_data';
+                                connection.query(lightTotalCountQuery, (err, lightTotalCountResult) => {
+                                    if (err) throw err;
+                                    const lightTotalCount = lightTotalCountResult[0].totalCount;
+                                    const lightPageCount = Math.ceil(lightTotalCount / lightPageSize);
+
+                                    res.render('table', {
+                                        sensorData,
+                                        sensorPageCount,
+                                        currentPage,
+                                        tempData,
+                                        tempPageCount,
+                                        tempCurrentPage,
+                                        humidData,
+                                        humidPageCount,
+                                        humidCurrentPage,
+                                        lightData,
+                                        lightPageCount,
+                                        lightCurrentPage,
+                                    });
+                                });
+                            });
+                        });
+                    });
+                });
             });
         });
     });
