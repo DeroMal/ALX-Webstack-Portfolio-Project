@@ -5,6 +5,7 @@
 
 ## Table of Contents
 
+- [Screenshots](#screenshots)
 - [Features](#features)
 - [Technologies Used](#technologies-used)
 - [Hardware Requirements](#hardware-requirements)
@@ -13,6 +14,15 @@
 - [Usage](#usage)
 - [Contributing](#contributing)
 - [License](#license)
+
+## Screenshots
+
+Here are some screenshots of the CaelumSense project:
+
+![Screenshot 1](/screenshots/screenshot1.png)
+![Screenshot 2](/screenshots/screenshot2.png)
+![Screenshot 3](/screenshots/screenshot3.png)
+![Screenshot 2](/screenshots/screenshot3.png)
 
 ## Features
 
