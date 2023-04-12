@@ -25,7 +25,7 @@ app.get('/assets/js/:filename', (req, res) => {
 });
 
 // Set up MySQL connection
-const dbCredentials = require('./db');
+const dbCredentials = require('./db'); //Import file containing credentials
 
 // Establish database connection using the credentials
 const connection = mysql.createConnection({
