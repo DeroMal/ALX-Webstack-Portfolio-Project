@@ -10,3 +10,4 @@ app3.js
 sensact.js
 sensor_data.js
 .well-known/pki-validation/
+.gitignore
