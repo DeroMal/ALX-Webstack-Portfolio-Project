@@ -69,7 +69,7 @@ app.get('/public/pages', (req, res) => {
 // ROUTES
 // Route to fetch chart data from database
 app.get('/chart-data', (req, res) => {
-    const sql = 'SELECT * FROM sensor_data ORDER BY dateTime DESC LIMIT 10';
+    const sql = 'SELECT * FROM sensor_data ORDER BY dateTime DESC LIMIT 60';
     connection.query(sql, (err, results) => {
         if (err) throw err;
 
@@ -85,9 +85,10 @@ app.get('/chart-data', (req, res) => {
 });
 //Chart-2
 app.get('/chart-data2', (req, res) => {
-    const humiditySql = 'SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT 10';
-    const temperatureSql = 'SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT 10';
-    const lightSql = 'SELECT * FROM light_data ORDER BY dateTime DESC LIMIT 10';
+    const maxData = 60;
+    const humiditySql = `SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}`;
+    const temperatureSql = `SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}`;
+    const lightSql = `SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}`;
 
     let humidityData, temperatureData, lightData;
 
