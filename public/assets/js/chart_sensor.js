@@ -22,7 +22,7 @@ function fetchChartData() {
             document.getElementById('lval').textContent = data.lightData.light[0];
 
             // Update temperature status and chart data 
-            var latestDataTime = moment(data.temperatureData.dateTime[0], 'MM Do, h:mm a').valueOf();
+            var latestDataTime = moment(data.temperatureData.dateTime[data.temperatureData.dateTime.length - 1], 'MM Do, h:mm a').valueOf();
             if (!latestDataTimeTemp || latestDataTime > latestDataTimeTemp) {
                 latestDataTimeTemp = latestDataTime;
                 var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
@@ -32,7 +32,7 @@ function fetchChartData() {
             }
 
             // Update humidity status and chart data
-            latestDataTime = moment(data.humidityData.dateTime[0], 'MM Do, h:mm a').valueOf();
+            latestDataTime = moment(data.humidityData.dateTime[data.humidityData.dateTime.length - 1], 'MM Do, h:mm a').valueOf();
             if (!latestDataTimeHumidity || latestDataTime > latestDataTimeHumidity) {
                 latestDataTimeHumidity = latestDataTime;
                 var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
@@ -42,7 +42,7 @@ function fetchChartData() {
             }
 
             // Update light status and chart data
-            latestDataTime = moment(data.lightData.dateTime[0], 'MM Do, h:mm a').valueOf();
+            latestDataTime = moment(data.lightData.dateTime[data.lightData.dateTime.length - 1], 'MM Do, h:mm a').valueOf();
             if (!latestDataTimeLight || latestDataTime > latestDataTimeLight) {
                 latestDataTimeLight = latestDataTime;
                 var timeDiff = moment.duration(moment().diff(moment(latestDataTime)));
