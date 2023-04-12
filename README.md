@@ -19,10 +19,10 @@
 
 Here are some screenshots of the CaelumSense project:
 
-![Screenshot 1](/screenshots/screenshot1.png)
-![Screenshot 2](/screenshots/screenshot2.png)
-![Screenshot 3](/screenshots/screenshot3.png)
-![Screenshot 2](/screenshots/screenshot3.png)
+![Screenshot 1](/screenshots/caelumsense_dash_light.png)
+![Screenshot 2](/screenshots/caelumsense_dash_dark.png)
+![Screenshot 3](/screenshots/caelumsense_table_light.png)
+![Screenshot 2](/screenshots/caelumsense_table_dark.png)
 
 ## Features
 
