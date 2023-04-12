@@ -258,6 +258,43 @@ app.post('/sensor-data', (req, res) => {
     });
 });
 
+app.post('/sensor-data2', (req, res) => {
+
+    const { temperature, humidity, light } = req.body;
+
+    // Validate inputs
+    if (!temperature || !humidity) {
+        return res.status(400).json({ error: 'Missing input data' });
+    }
+
+    // Insert data into database
+    const tempSql = `INSERT INTO temperature_data (temperature) VALUES (${temperature})`;
+    const humiditySql = `INSERT INTO humidity_data (humidity) VALUES (${humidity})`;
+    const lightSql = `INSERT INTO light_data (light) VALUES (${light})`;
+    connection.query(tempSql, (err, results) => {
+        if (err) {
+            console.error('Error inserting temperature data into database:', err);
+            return res.status(500).json({ error: 'Server error' });
+        }
+
+        connection.query(humiditySql, (err, results) => {
+            if (err) {
+                console.error('Error inserting humidity data into database:', err);
+                return res.status(500).json({ error: 'Server error' });
+            }
+
+            connection.query(lightSql, (err, results) => {
+                if (err) {
+                    console.error('Error inserting light data into database:', err);
+                    return res.status(500).json({ error: 'Server error' });
+                }
+
+                res.status(200).json({ message: 'Sensor data saved successfully' });
+            });
+        });
+    });
+});
+
 // Endpoint to receive actuator data
 app.post('/actuator-data', (req, res) => {
     const { fanStatus, humidifierStatus, pumpStatus, lightStatus } = req.body;
