@@ -1,6 +1,6 @@
 # Arduino Sensor Data Sender
 
-This project contains two Arduino codes for fetching sensor data and sending it to a remote server using HTTPS POST requests. 
+This repository contains two Arduino codes for fetching sensor data and sending it to a remote server using HTTPS POST requests. 
 
 ## Description
 
