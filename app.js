@@ -87,9 +87,11 @@ app.get('/chart-data', (req, res) => {
 app.get('/chart-data2', (req, res) => {
     const maxData = 60;
     // const humiditySql = `SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}`;
-    const humiditySql = `SELECT * FROM (SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}) AS latest_data ORDER BY dateTime ASC`;
-    const temperatureSql = `SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}`;
-    const lightSql = `SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}`;
+    const humiditySql = `SELECT * FROM (SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
+    // const temperatureSql = `SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}`;
+    const temperatureSql = `SELECT * FROM (SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
+    // const lightSql = `SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}`;
+    const lightSql = `SELECT * FROM (SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
 
     let humidityData, temperatureData, lightData;
 
