@@ -84,51 +84,80 @@ app.get('/chart-data', (req, res) => {
     });
 });
 //Chart-2
+// app.post('/chart-api', (req, res) => {
+
+// });
+app.route('/max-data')
+    .post((req, res) => {
+        number = req.body.number;
+        console.log(`The user entered ${number}`);
+        const truncateSql = `TRUNCATE TABLE max_data`;
+        const insertSql = `INSERT INTO max_data (max_data) VALUES (${number})`;
+
+        connection.query(truncateSql, (err, results) => {
+            if (err) throw err;
+            connection.query(insertSql, (err, results) => {
+                if (err) throw err;
+                console.log('Data inserted successfully');
+            });
+        });
+
+        res.json({ number });
+        number = 100;
+    });
+
 app.get('/chart-data2', (req, res) => {
-    const maxData = 60;
-    // const humiditySql = `SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}`;
-    const humiditySql = `SELECT * FROM (SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
-    // const temperatureSql = `SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}`;
-    const temperatureSql = `SELECT * FROM (SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
-    // const lightSql = `SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}`;
-    const lightSql = `SELECT * FROM (SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
-
-    let humidityData, temperatureData, lightData;
-
-    connection.query(temperatureSql, (err, results) => {
+    let maxData = 10;
+    const maxdataSql = `SELECT max_data FROM max_data`;
+    connection.query(maxdataSql, (err, results) => {
         if (err) throw err;
 
-        temperatureData = {
-            temperature: results.map((entry) => entry.temperature),
-            dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
-        };
+        maxData = results[0].max_data;
+        console.log(`maxData = ${maxData}`);
 
-        connection.query(humiditySql, (err, results) => {
+        // Put your code that uses maxData here
+        const humiditySql = `SELECT * FROM (SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
+        const temperatureSql = `SELECT * FROM (SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
+        const lightSql = `SELECT * FROM (SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
+        let humidityData, temperatureData, lightData;
+
+        connection.query(temperatureSql, (err, results) => {
             if (err) throw err;
 
-            humidityData = {
-                humidity: results.map((entry) => entry.humidity),
+            temperatureData = {
+                temperature: results.map((entry) => entry.temperature),
                 dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
             };
 
-            connection.query(lightSql, (err, results) => {
+            connection.query(humiditySql, (err, results) => {
                 if (err) throw err;
 
-                lightData = {
-                    light: results.map((entry) => entry.light),
+                humidityData = {
+                    humidity: results.map((entry) => entry.humidity),
                     dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
                 };
 
-                const chartData = {
-                    humidityData,
-                    temperatureData,
-                    lightData
-                };
+                connection.query(lightSql, (err, results) => {
+                    if (err) throw err;
 
-                res.json(chartData);
+                    lightData = {
+                        light: results.map((entry) => entry.light),
+                        dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
+                    };
+
+                    const chartData = {
+                        humidityData,
+                        temperatureData,
+                        lightData
+                    };
+
+                    res.json(chartData);
+                });
             });
         });
     });
+
+
 });
 
 // Route handler for displaying paginated sensor data

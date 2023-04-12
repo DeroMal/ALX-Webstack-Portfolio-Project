@@ -121,14 +121,18 @@
                     <p class="sensor-readings-subtitle">Monitoring the SMART Rooms with precision and accuracy</p>
                 </div>
                 <div class="sensor-readings-body">
-                    <p class="sensor-readings-text">With <i style="color:yellow;">CaelumSense's</i> advanced monitoring and analytics capabilities, I have a complete picture of my environment and can make informed decisions based on real-time data.</p>
+                    <p class="sensor-readings-text">Explore <i style="color:yellow;">Derrick's</i> bedroom with near-real time data and analytics</p>
                 </div>
                 <div class="sensor-readings-footer">
-                    <p class="sensor-readings-text">Experience the power of real-time data insights with CaelumSense!</p>
+                    <p class="sensor-readings-text">Experience the power of real-time data insights with CaelumSense!. What are you still waiting for?</p>
                 </div>
             </div>
 
             <!--END HERO-->
+            <!--TESTING SPACE-->
+
+
+            <!--END OF TEST SPACE-->
             <div class="row mt-4">
                 <div class="col-lg-4 col-md-6 mt-4 mb-4">
                     <div class="card z-index-2 ">
@@ -174,6 +178,52 @@
                         <hr class="dark horizontal my-0">
                     </div>
                 </div>
+            </div>
+            <div class="row mt-4">
+                <h3>Enter number of datapoints to display on the graphs</h3>
+                <p><i>Should be between 1 & 1000 inclusive</i></p>
+                <form id="number-form">
+                    <label for="number">Data Points:</label>
+                    <input type="number" id="number" name="number" />
+                    <br />
+                    <button type="submit">Submit</button>
+                </form>
+                <div id="result"></div>
+
+                <script>
+                    const form = document.getElementById('number-form');
+                    const resultDiv = document.getElementById('result');
+
+                    form.addEventListener('submit', async(event) => {
+                        event.preventDefault();
+
+                        const number = form.number.value;
+
+                        if (number < 1) {
+                            alert('Only a minimum of 1 datapoint is accepted');
+                            return;
+                        }
+
+                        if (number > 1000) {
+                            alert('Only a maximum of 1000 datapoints are accepted');
+                            return;
+                        }
+
+                        const response = await fetch('/max-data', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({
+                                number
+                            }),
+                        });
+
+                        const data = await response.json();
+                        resultDiv.textContent = `You entered: ${data.number}`;
+                        location.reload(); // refresh the page
+                    });
+                </script>
             </div>
             <div class="row mt-4">
                 <div class="col-lg-4 col-md-6 mt-4 mb-4">
