@@ -13,13 +13,14 @@ var statusElementLight = document.getElementById("statusL");
 
 // Function to update chart data 
 function fetchChartData() {
-    fetch('/chart-data2')
+    fetch('/chart-api')
         .then(response => response.json())
         .then(data => {
             //Pick the lates sensor readings
             document.getElementById('tval').textContent = data.temperatureData.temperature[data.temperatureData.temperature.length - 1] + '\u00B0C';
             document.getElementById('hval').textContent = data.humidityData.humidity[data.humidityData.humidity.length - 1] + '%';
             document.getElementById('lval').textContent = data.lightData.light[data.lightData.light.length - 1] + ' LUX';
+            document.getElementById('maxVal').textContent = data.MaxData.max_data[data.MaxData.max_data.length - 1] + '     ';
 
             // Update temperature status and chart data 
             var latestDataTime = moment(data.temperatureData.dateTime[data.temperatureData.dateTime.length - 1], 'MM Do, h:mm a').valueOf();
@@ -106,6 +107,7 @@ function getTimeDiffString(diff) {
 setInterval(fetchChartData, 3000);
 
 // Initialize charts on page load 
+//Defining the temperature chart
 chartTemp = new Chart(
     document.getElementById("tempChart").getContext("2d"), {
         type: "line",
@@ -182,6 +184,7 @@ chartTemp = new Chart(
     }
 );
 
+//Defining the Humidity chart
 chartHumidity = new Chart(
     document.getElementById("humidChart").getContext("2d"), {
         type: "line",
@@ -258,6 +261,7 @@ chartHumidity = new Chart(
     }
 );
 
+//Defining the ligthLevel chart
 chartLight = new Chart(
     document.getElementById("lightChart").getContext("2d"), {
         type: "line",

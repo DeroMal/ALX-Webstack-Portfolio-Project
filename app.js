@@ -12,7 +12,7 @@ const timezone = 'Africa/Kampala';
 const app = express();
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://sensgro.rec22test.site/");
+    res.header("Access-Control-Allow-Origin", "https://caelumsense.rec22test.site/");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });
@@ -48,45 +48,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 // Set up middleware for serving static files and parsing request body
 app.use(express.static(path.join(__dirname, '/public/pages')));
 
-// Route for getting sensor data
-app.get('/public/pages', (req, res) => {
-    // Query to get latest sensor data from database
-    const query = 'SELECT * FROM sensor_data ORDER BY id DESC LIMIT 1';
-
-    // Execute query
-    connection.query(query, (error, results) => {
-        if (error) {
-            console.log('Error executing query: ' + error.stack);
-            res.status(500).send('Error retrieving sensor data');
-            return;
-        }
-
-        // Send sensor data as JSON response
-        res.json(results[0]);
-    });
-});
-
-// ROUTES
-// Route to fetch chart data from database
-app.get('/chart-data', (req, res) => {
-    const sql = 'SELECT * FROM sensor_data ORDER BY dateTime DESC LIMIT 60';
-    connection.query(sql, (err, results) => {
-        if (err) throw err;
-
-        const chartData = {
-            humidity: results.map((entry) => entry.humidity),
-            temperature: results.map((entry) => entry.temperature),
-            light: results.map((entry) => entry.light),
-            dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
-        };
-
-        res.json(chartData);
-    });
-});
-//Chart-2
-// app.post('/chart-api', (req, res) => {
-
-// });
+// =============================ROUTES============================================================
+// Route to fetch user input for number of datapoints and  save to the database
 app.route('/max-data')
     .post((req, res) => {
         number = req.body.number;
@@ -106,21 +69,27 @@ app.route('/max-data')
         number = 100;
     });
 
-app.get('/chart-data2', (req, res) => {
+// Route to fetch data from the database and send to the frontend
+app.get('/chart-api', (req, res) => {
     let maxData = 10;
     const maxdataSql = `SELECT max_data FROM max_data`;
+
+    //Query the MaxData point db
     connection.query(maxdataSql, (err, results) => {
         if (err) throw err;
 
         maxData = results[0].max_data;
         console.log(`maxData = ${maxData}`);
+        let MaxData = {
+            max_data: results.map((entry) => entry.max_data)
+        };
 
-        // Put your code that uses maxData here
         const humiditySql = `SELECT * FROM (SELECT * FROM humidity_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
         const temperatureSql = `SELECT * FROM (SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
         const lightSql = `SELECT * FROM (SELECT * FROM light_data ORDER BY dateTime DESC LIMIT ${maxData}) sub ORDER BY id ASC`;
         let humidityData, temperatureData, lightData;
 
+        //Query the temperature db
         connection.query(temperatureSql, (err, results) => {
             if (err) throw err;
 
@@ -129,6 +98,7 @@ app.get('/chart-data2', (req, res) => {
                 dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
             };
 
+            //Query the humidity db
             connection.query(humiditySql, (err, results) => {
                 if (err) throw err;
 
@@ -137,6 +107,7 @@ app.get('/chart-data2', (req, res) => {
                     dateTime: results.map((entry) => moment.tz(entry.dateTime, 'UTC').tz(timezone).format('MM Do, h:mm a'))
                 };
 
+                //Query the LightLevel db
                 connection.query(lightSql, (err, results) => {
                     if (err) throw err;
 
@@ -148,7 +119,8 @@ app.get('/chart-data2', (req, res) => {
                     const chartData = {
                         humidityData,
                         temperatureData,
-                        lightData
+                        lightData,
+                        MaxData
                     };
 
                     res.json(chartData);
@@ -272,26 +244,6 @@ app.get('/table', (req, res) => {
 
 // Endpoint to receive sensor data
 app.post('/sensor-data', (req, res) => {
-    const { temperature, humidity, moisture, light } = req.body;
-
-    // Validate inputs
-    if (!temperature || !humidity) {
-        return res.status(400).json({ error: 'Missing input data' });
-    }
-
-    // Insert data into database
-    const sql = `INSERT INTO sensor_data (temperature, humidity, moisture, light) VALUES (${temperature}, ${humidity}, ${moisture}, ${light})`;
-    connection.query(sql, (err, results) => {
-        if (err) {
-            console.error('Error inserting data into database:', err);
-            return res.status(500).json({ error: 'Server error' });
-        }
-
-        res.status(200).json({ message: 'Sensor data saved successfully' });
-    });
-});
-
-app.post('/sensor-data2', (req, res) => {
 
     const { temperature, humidity, light } = req.body;
 
@@ -300,7 +252,7 @@ app.post('/sensor-data2', (req, res) => {
         return res.status(400).json({ error: 'Missing input data' });
     }
 
-    // Insert data into database
+    // Insert data into database tables
     const tempSql = `INSERT INTO temperature_data (temperature) VALUES (${temperature})`;
     const humiditySql = `INSERT INTO humidity_data (humidity) VALUES (${humidity})`;
     const lightSql = `INSERT INTO light_data (light) VALUES (${light})`;

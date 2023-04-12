@@ -113,24 +113,25 @@
         <!-- End Navbar -->
         <div class="container-fluid py-4">
             <!--HERO-->
-            <div class="user-readings-container">
-                <div class="user-readings-header">
-                    <h1 class="user-readings-title">Derrick L. Mayiku</h1>
+            <div class="card">
+                <div class="user-readings-container">
+                    <div class="user-readings-header">
+                        <h1 class="user-readings-title">Derrick L. Mayiku</h1>
+                    </div>
+                </div>
+                <div class="sensor-readings-container">
+                    <div class="sensor-readings-header">
+                        <h1 class="sensor-readings-title">CaelumSense</h1>
+                        <p class="sensor-readings-subtitle">Monitoring the SMART Rooms with precision and accuracy</p>
+                    </div>
+                    <div class="sensor-readings-body">
+                        <p class="sensor-readings-text">Explore <i style="color:yellow;">Derrick's</i> bedroom with near-real time data and analytics</p>
+                    </div>
+                    <div class="sensor-readings-footer">
+                        <p class="sensor-readings-text">Experience the power of real-time data insights with CaelumSense!. What are you still waiting for?</p>
+                    </div>
                 </div>
             </div>
-            <div class="sensor-readings-container">
-                <div class="sensor-readings-header">
-                    <h1 class="sensor-readings-title">CaelumSense</h1>
-                    <p class="sensor-readings-subtitle">Monitoring the SMART Rooms with precision and accuracy</p>
-                </div>
-                <div class="sensor-readings-body">
-                    <p class="sensor-readings-text">Explore <i style="color:yellow;">Derrick's</i> bedroom with near-real time data and analytics</p>
-                </div>
-                <div class="sensor-readings-footer">
-                    <p class="sensor-readings-text">Experience the power of real-time data insights with CaelumSense!. What are you still waiting for?</p>
-                </div>
-            </div>
-
             <!--END HERO-->
             <!--TESTING SPACE-->
 
@@ -194,7 +195,7 @@
                     </div>
                 </div>
             </div>
-            <div class="row mt-4">
+            <div class=" card row mt-4 row mt-4 p-3 rounded ">
                 <h3>Enter number of datapoints to display on the graphs</h3>
                 <p><i>Should be between 1 & 1000 inclusive</i></p>
                 <form id="number-form">
@@ -203,6 +204,7 @@
                     <br />
                     <button type="submit">Submit</button>
                 </form>
+                <hr class="dark horizontal">
                 <div id="result"></div>
 
                 <script>
@@ -239,6 +241,11 @@
                         location.reload(); // refresh the page
                     });
                 </script>
+            </div>
+            <div class="text-center card row mt-4 row mt-4 p-3 rounded">
+                <h4 class="mb-0 fw-bold">
+                    <span class="font-italic font-weight-bold text-warning" id="maxVal">-</span> <span>  - datapoints are plotted on the graphs</span>
+                </h4>
             </div>
             <div class="row mt-4">
                 <div class="col-lg-4 col-md-6 mt-4 mb-4">
