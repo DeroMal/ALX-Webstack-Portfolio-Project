@@ -108,7 +108,7 @@ setInterval(fetchChartData, 3000);
 // Initialize charts on page load 
 chartTemp = new Chart(
     document.getElementById("tempChart").getContext("2d"), {
-        type: "bar",
+        type: "line",
         data: {
             labels: [], // Empty initially
             datasets: [{
