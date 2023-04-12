@@ -17,9 +17,9 @@ function fetchChartData() {
         .then(response => response.json())
         .then(data => {
             //Pick the lates sensor readings
-            document.getElementById('tval').textContent = data.temperatureData.temperature[data.temperatureData.temperature.length - 1];
-            document.getElementById('hval').textContent = data.humidityData.humidity[data.humidityData.humidity.length - 1];
-            document.getElementById('lval').textContent = data.lightData.light[data.lightData.light.length - 1];
+            document.getElementById('tval').textContent = data.temperatureData.temperature[data.temperatureData.temperature.length - 1] + '\u00B0C';
+            document.getElementById('hval').textContent = data.humidityData.humidity[data.humidityData.humidity.length - 1] + '%';
+            document.getElementById('lval').textContent = data.lightData.light[data.lightData.light.length - 1] + ' LUX';
 
             // Update temperature status and chart data 
             var latestDataTime = moment(data.temperatureData.dateTime[data.temperatureData.dateTime.length - 1], 'MM Do, h:mm a').valueOf();

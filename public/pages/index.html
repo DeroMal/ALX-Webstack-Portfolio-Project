@@ -39,6 +39,9 @@
     <script src="https://kit.fontawesome.com/42d5adcbca.js" crossorigin="anonymous"></script>
     <!-- Material Icons -->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+
+
     <!-- CSS Files -->
     <link id="pagestyle" href="/assets/css/material-dashboard.css?v=3.0.4" rel="stylesheet" />
     <link id="pagestyle" href="/assets/css/mystyle.css" rel="stylesheet" />
@@ -139,11 +142,15 @@
                         <div class="card">
                             <div class="card-header p-3 pt-2">
                                 <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                                    <i class="material-icons opacity-10">Temperature</i>
+                                    <i class="material-icons opacity-10">ac_unit</i><i class="material-icons">thermostat</i>
                                 </div>
-                                <div class="text-end pt-1">
-                                    <p class="text-sm mb-0 text-capitalize">Today's Temperature</p>
-                                    <h4 id="tval" class="mb-0"></h4>
+                                <div class="d-flex justify-content-center">
+                                    <div class="text-center pt-1">
+                                        <div class="text-sm mb-0 text-capitalize">Temperature</div>
+                                        <span class="text-end pt-1">
+                                        <h4 id="tval" class="mb-0"></h4>
+                                      </span>
+                                    </div>
                                 </div>
                             </div>
                             <hr class="dark horizontal my-0">
@@ -154,11 +161,15 @@
                     <div class="card z-index-2 ">
                         <div class="card-header p-3 pt-2">
                             <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">Humidity</i>
+                                <i class="material-icons">waves</i>
                             </div>
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Humidity</p>
-                                <h4 id="hval" class="mb-0"></h4>
+                            <div class="d-flex justify-content-center">
+                                <div class="text-center pt-1">
+                                    <div class="text-sm mb-0 text-capitalize">Humidity</div>
+                                    <span class="text-end pt-1">
+                                    <h4 id="hval" class="mb-0"></h4>
+                                  </span>
+                                </div>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
@@ -168,11 +179,15 @@
                     <div class="card z-index-2 ">
                         <div class="card-header p-3 pt-2">
                             <div class="icon icon-lg icon-shape bg-gradient-dark shadow-dark text-center border-radius-xl mt-n4 position-absolute">
-                                <i class="material-icons opacity-10">Light</i>
+                                <i class="material-icons opacity-10">wb_sunny</i><i class="material-icons">brightness_medium</i>
                             </div>
-                            <div class="text-end pt-1">
-                                <p class="text-sm mb-0 text-capitalize">Light</p>
-                                <h4 id="lval" class="mb-0"></h4>
+                            <div class="d-flex justify-content-center">
+                                <div class="text-center pt-1">
+                                    <div class="text-sm mb-0 text-capitalize">Light</div>
+                                    <span class="text-end pt-1">
+                                    <h4 id="lval" class="mb-0"></h4>
+                                  </span>
+                                </div>
                             </div>
                         </div>
                         <hr class="dark horizontal my-0">
