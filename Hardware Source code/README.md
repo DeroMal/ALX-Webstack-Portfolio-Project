@@ -17,10 +17,10 @@ The second code `send-sensor-data.ino` establishes a secure connection to the re
 
 Note: Before uploading the code, make sure to update the following variables with your own information:
 
-const char* ssid = "YOUR_WIFI_SSID";
-const char* password = "YOUR_WIFI_PASSWORD";
-const char* host = "YOUR_REMOTE_SERVER_HOSTNAME";
-const char* fingerprint = "YOUR_REMOTE_SERVER_SSL_FINGERPRINT";
+1. const char* ssid = "YOUR_WIFI_SSID";
+2. const char* password = "YOUR_WIFI_PASSWORD";
+3. const char* host = "YOUR_REMOTE_SERVER_HOSTNAME";
+4. const char* fingerprint = "YOUR_REMOTE_SERVER_SSL_FINGERPRINT";
 
 
 ## Disclaimer
