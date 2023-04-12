@@ -57,7 +57,7 @@ To install and set up the CaelumSense system, follow these steps:
 
 1. Clone the CaelumSense GitHub repository to your local machine.
 2. Install Node.js and MySQL on your machine if they are not already installed.
-3. Set up the MySQL database using the provided [caelumsense.sql](https://github.com/DeroMal/CaelumSense-SMART-ROOM/tree/master/database) file.
+3. Set up the MySQL database using the provided [`caelumsense.sql`](https://github.com/DeroMal/CaelumSense-SMART-ROOM/tree/master/database) file.
 4. Navigate to the `root` directory in a terminal window and run the command `npm install` to install the required Node.js modules.
 5. Follow the instructions in the [Arduino](https://github.com/DeroMal/CaelumSense-SMART-ROOM/tree/master/Arduino#readme) directory on how to connect and configure the Arduino boards.
 6. After setting up the Arduino and the sensors, navigate to the `root` directory in a terminal window and run the command `node app.js` to start the server.
