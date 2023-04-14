@@ -83,10 +83,13 @@ function getTimeDiffString(diff) {
     var minutes = diff.minutes();
     var seconds = diff.seconds();
     if (days > 0) {
-        timeDiffString += days + " day" + (days > 1 ? "s " : " ");
+        timeDiffString += days + " day" + (days > 1 ? "s " : " ") + ": The sensors might have gone offline";
+        prompt("The sensors have gone offline. The data for the last " + (days > 1 ? "s " : " ") + " aren't available");
     }
     if (hours > 0) {
-        timeDiffString += hours + " hour" + (hours > 1 ? "s " : " ");
+        timeDiffString += hours + " hour" + (hours > 1 ? "s " : " " + ": The sensors might have gone offline");
+        prompt("The sensors have gone offline. The data for the last " + (hours > 1 ? "s " : " ") + " aren't available");
+
     }
     if (minutes > 0) {
         timeDiffString += minutes + " minute" + (minutes > 1 ? "s " : " ");
