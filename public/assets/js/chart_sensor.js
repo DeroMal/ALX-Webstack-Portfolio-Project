@@ -83,10 +83,10 @@ function getTimeDiffString(diff) {
     var minutes = diff.minutes();
     var seconds = diff.seconds();
     if (days > 0) {
-        timeDiffString += days + " day" + (days > 1 ? "s " : " ") + ": The sensors might have gone offline";
+        timeDiffString += days + " day" + (days > 1 ? "s " : " ");
     }
     if (hours > 0) {
-        timeDiffString += hours + " hour" + (hours > 1 ? "s " : " " + ": The sensors might have gone offline");
+        timeDiffString += hours + " hour" + (hours > 1 ? "s " : " " + "");
 
     }
     if (minutes > 0) {
