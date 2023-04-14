@@ -22,7 +22,7 @@
 #include <ArduinoJson.h> // Import the ArduinoJson library for JSON serialization
 
 #define DHTTYPE DHT22 // Define the type of DHT sensor being used
-#define DHTPIN 2 // Define the digital pin to which the DHT22 sensor is connected
+#define DHTPIN 4 // Define the digital pin to which the DHT22 sensor is connected
 #define LDRPIN A0 // Define the analog pin to which the LDR sensor is connected
 
 SoftwareSerial esp(10, 11); // RX, TX: create a new software serial object for communication with the ESP8266
@@ -38,7 +38,9 @@ void setup() {
 
 void loop() {
   float humidity = dht.readHumidity(); // Read the humidity value from the DHT sensor
+//  delay(1000);
   float temperature = dht.readTemperature(); // Read the temperature value from the DHT sensor
+//  delay(1000);
   int lightLevel = analogRead(LDRPIN); // Read the light level from the LDR sensor
 
   if (isnan(humidity) || isnan(temperature)) { // Check if either the humidity or temperature value is NaN
