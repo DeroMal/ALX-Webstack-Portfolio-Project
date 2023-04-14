@@ -18,10 +18,15 @@
 ## Screenshots
 
 Here are some screenshots of the CaelumSense project:
-
+### Hardware set-up:
+![Screenshot 2](/screenshots/IMG_20230413_143824_578.jpg)
+### Dashboard Light mode:
 ![Screenshot 1](/screenshots/caelumsense_dash_light.png)
+### Dashboard Dark mode:
 ![Screenshot 2](/screenshots/caelumsense_dash_dark.png)
+### Table Page in Light Mode:
 ![Screenshot 3](/screenshots/caelumsense_table_light.png)
+### Table Page in Dark Mode:
 ![Screenshot 2](/screenshots/caelumsense_table_dark.png)
 
 ## Features
