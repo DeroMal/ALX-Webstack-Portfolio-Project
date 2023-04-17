@@ -49,7 +49,7 @@ app.post('/chatbot', async(req, res) => {
         res.json({ response: response.data.choices[0].text.trim() });
     } catch (error) {
         console.error("Error while running completion:", error.message);
-        res.status(500).send('Something went wrong!');
+        res.status(500).json({ error: 'Something went wrong!' });
     }
 });
 
