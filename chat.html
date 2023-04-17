@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>Chat Bot</title>
+</head>
+
+<body>
+    <h1>Chat Bot</h1>
+    <p>Type your question below:</p>
+    <input type="text" id="inputBox">
+    <button onclick="sendQuestion()">Send</button>
+    <div id="responseBox"></div>
+
+    <script>
+        function sendQuestion() {
+            const question = document.getElementById("inputBox").value;
+            fetch(`/chatbot?question=${question}`)
+                .then(response => response.text())
+                .then(responseText => {
+                    document.getElementById("responseBox").innerText = responseText;
+                });
+        }
+    </script>
+</body>
+
+</html>
