@@ -26,19 +26,21 @@ fs.createReadStream(csvFilePath)
         console.log('Accessing sensor data at real time ... \nSuccessfully processed database data\n');
     });
 
-// Handle GET requests to /chatbot endpoint
-app.get('/chatbot', async(req, res) => {
-    try {
-        // Get the user's question from the query parameter
-        const question = req.query.question;
+// Serve chat.html
+app.get('/', (req, res) => {
+    res.sendFile(path.join(__dirname, 'chat.html'));
+});
 
+// Handle POST request to /chat
+app.post('/chat', async(req, res) => {
+    try {
         // Get the last row of the CSV data
         const lastRow = data[data.length - 1];
 
         // Generate the bot's response
         const response = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `${question}\n${Object.values(lastRow).join('\n')}\n`,
+            prompt: `${req.body.question}\n${Object.values(lastRow).join('\n')}\n`,
             max_tokens: 500,
         });
 
@@ -46,10 +48,9 @@ app.get('/chatbot', async(req, res) => {
         res.send(response.data.choices[0].text.trim());
     } catch (error) {
         console.error("Error while running completion:", error.message);
-        res.status(500).send("An error occurred while processing your request.");
+        res.status(500).send("Error while generating bot response");
     }
 });
-
 // Start the server
 app.listen(3000, () => {
     console.log('Server is running on port 3000');

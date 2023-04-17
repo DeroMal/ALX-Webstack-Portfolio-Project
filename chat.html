@@ -4,24 +4,40 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat Bot</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 
 <body>
     <h1>Chat Bot</h1>
-    <p>Type your question below:</p>
-    <input type="text" id="inputBox">
-    <button onclick="sendQuestion()">Send</button>
-    <div id="responseBox"></div>
+    <div id="chat-container">
+        <div id="chat-log"></div>
+        <div id="chat-input">
+            <input type="text" id="user-input" placeholder="Type your question...">
+            <button id="submit-btn">Send</button>
+        </div>
+    </div>
 
     <script>
-        function sendQuestion() {
-            const question = document.getElementById("inputBox").value;
-            fetch(`/chatbot?question=${question}`)
-                .then(response => response.text())
-                .then(responseText => {
-                    document.getElementById("responseBox").innerText = responseText;
+        $(document).ready(function() {
+            $('#submit-btn').click(function() {
+                // Get user input
+                var userInput = $('#user-input').val();
+
+                // Clear input field
+                $('#user-input').val('');
+
+                // Append user input to chat log
+                $('#chat-log').append('<p>You: ' + userInput + '</p>');
+
+                // Send user input to server
+                $.post('/chat', {
+                    question: userInput
+                }, function(response) {
+                    // Append bot response to chat log
+                    $('#chat-log').append('<p>Bot: ' + response + '</p>');
                 });
-        }
+            });
+        });
     </script>
 </body>
 
