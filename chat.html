@@ -4,41 +4,63 @@
 <head>
     <meta charset="UTF-8">
     <title>Chat Bot</title>
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        /* Chat window styles */
+        
+        #chat-window {
+            width: 400px;
+            height: 500px;
+            border: 1px solid black;
+            overflow: scroll;
+            padding: 10px;
+        }
+        /* Input box styles */
+        
+        #input-box {
+            width: 100%;
+            padding: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <h1>Chat Bot</h1>
-    <div id="chat-container">
-        <div id="chat-log"></div>
-        <div id="chat-input">
-            <input type="text" id="user-input" placeholder="Type your question...">
-            <button id="submit-btn">Send</button>
-        </div>
-    </div>
-
+    <div id="chat-window"></div>
+    <input type="text" id="input-box" placeholder="Ask a question...">
     <script>
-        $(document).ready(function() {
-            $('#submit-btn').click(function() {
-                // Get user input
-                var userInput = $('#user-input').val();
+        // Connect to server and set up chat
+        const socket = io();
 
-                // Clear input field
-                $('#user-input').val('');
+        const chatWindow = document.getElementById('chat-window');
+        const inputBox = document.getElementById('input-box');
 
-                // Append user input to chat log
-                $('#chat-log').append('<p>You: ' + userInput + '</p>');
+        inputBox.addEventListener('keyup', (event) => {
+            if (event.keyCode === 13) {
+                event.preventDefault();
+                sendMessage();
+            }
+        });
 
-                // Send user input to server
-                $.post('/chat', {
-                    question: userInput
-                }, function(response) {
-                    // Append bot response to chat log
-                    $('#chat-log').append('<p>Bot: ' + response + '</p>');
-                });
-            });
+        function sendMessage() {
+            const message = inputBox.value.trim();
+            if (message) {
+                inputBox.value = '';
+                socket.emit('message', message);
+                addMessage('You', message);
+            }
+        }
+
+        function addMessage(sender, message) {
+            const messageDiv = document.createElement('div');
+            messageDiv.innerHTML = `<strong>${sender}: </strong>${message}`;
+            chatWindow.appendChild(messageDiv);
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        socket.on('bot-message', (message) => {
+            addMessage('Caelum', message);
         });
     </script>
+    <script src="/socket.io/socket.io.js"></script>
 </body>
 
 </html>

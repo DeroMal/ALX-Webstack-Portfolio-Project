@@ -26,13 +26,14 @@ fs.createReadStream(csvFilePath)
         console.log('Accessing sensor data at real time ... \nSuccessfully processed database data\n');
     });
 
-// Serve chat.html
+// Serve the chat.html file
+app.use(express.static('public'));
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'chat.html'));
+    res.sendFile(path.join(__dirname, '/public/chat.html'));
 });
 
-// Handle POST request to /chat
-app.post('/chat', async(req, res) => {
+// Endpoint for chatbot API
+app.post('/chatbot', async(req, res) => {
     try {
         // Get the last row of the CSV data
         const lastRow = data[data.length - 1];
@@ -44,14 +45,16 @@ app.post('/chat', async(req, res) => {
             max_tokens: 500,
         });
 
-        // Send the bot's response back to the client
-        res.send(response.data.choices[0].text.trim());
+        // Return the bot's response
+        res.json({ response: response.data.choices[0].text.trim() });
     } catch (error) {
         console.error("Error while running completion:", error.message);
-        res.status(500).send("Error while generating bot response");
+        res.status(500).send('Something went wrong!');
     }
 });
+
 // Start the server
-app.listen(3000, () => {
-    console.log('Server is running on port 3000');
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server running on port ${PORT}`);
 });
