@@ -1,10 +1,8 @@
 const express = require('express');
 const app = express();
-const csv = require('csv-parser');
-const fs = require('fs');
-const path = require('path');
 const { Configuration, OpenAIApi } = require("openai");
 require('dotenv').config();
+const mysql = require('mysql');
 
 // Set up OpenAI API configuration
 const configuration = new Configuration({
@@ -14,17 +12,24 @@ const configuration = new Configuration({
 // Create OpenAI API instance
 const openai = new OpenAIApi(configuration);
 
-// Read the CSV data and store it in an array
-const csvFilePath = './temp_humid.csv';
-const data = [];
-fs.createReadStream(csvFilePath)
-    .pipe(csv())
-    .on('data', (row) => {
-        data.push(row);
-    })
-    .on('end', () => {
-        console.log('Accessing sensor data at real time ... \nSuccessfully processed database data\n');
-    });
+// Set up MySQL connection
+const dbCredentials = require('./db'); //Import file containing credentials
+
+// Establish database connection using the credentials
+const connection = mysql.createConnection({
+    host: dbCredentials.host,
+    user: dbCredentials.user,
+    password: dbCredentials.password,
+    database: dbCredentials.database
+});
+
+connection.connect((err) => {
+    if (err) {
+        console.error('Error connecting to MySQL database:', err.message);
+        process.exit(1);
+    }
+    console.log('Connected to MySQL database');
+});
 
 // Serve the web interface
 app.use(express.static(path.join(__dirname, 'public')));
@@ -35,18 +40,25 @@ app.get('/', (req, res) => {
 // Handle chat bot requests
 app.get('/chat', async(req, res) => {
     try {
-        // Get the last 10 rows of the CSV data that are relevant to the user's question
-        const relevantRows = data.filter(row => row['timestamp'] > req.query.timestamp).slice(-10);
+        // Query the MySQL database for the relevant JSON data
+        const queryString = `SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT 20`;
+        connection.query(queryString, async(error, results, fields) => {
+            if (error) {
+                console.error('Error querying MySQL database:', error.message);
+                res.status(500).send('Error querying MySQL database');
+            } else {
+                // Generate the bot's response
+                const jsonData = results.map(result => result.json_data);
+                const response = await openai.createCompletion({
+                    model: "text-davinci-003",
+                    prompt: `${req.query.question}\n${jsonData.join('\n')}\n`,
+                    max_tokens: 500,
+                });
 
-        // Generate the bot's response
-        const response = await openai.createCompletion({
-            model: "text-davinci-003",
-            prompt: `${req.query.question}\n${relevantRows.map(row => Object.values(row).join('\n')).join('\n')}\n`,
-            max_tokens: 2000,
+                // Return the bot's response
+                res.send(response.data.choices[0].text.trim());
+            }
         });
-
-        // Return the bot's response
-        res.send(response.data.choices[0].text.trim());
     } catch (error) {
         console.error("Error while running completion:", error.message);
         res.status(500).send("Error while running completion");
