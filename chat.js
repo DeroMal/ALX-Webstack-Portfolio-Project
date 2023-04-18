@@ -15,7 +15,7 @@ const configuration = new Configuration({
 const openai = new OpenAIApi(configuration);
 
 // Read the CSV data and store it in an array
-const csvFilePath = './temperature_data.csv';
+const csvFilePath = './temp_humid.csv';
 const data = [];
 fs.createReadStream(csvFilePath)
     .pipe(csv())
@@ -26,35 +26,35 @@ fs.createReadStream(csvFilePath)
         console.log('Accessing sensor data at real time ... \nSuccessfully processed database data\n');
     });
 
-// Serve the chat.html file
-app.use(express.static('public'));
+// Serve the web interface
+app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, '/public/chat.html'));
+    res.sendFile(path.join(__dirname, 'index.html'));
 });
 
-// Endpoint for chatbot API
-app.post('/chatbot', async(req, res) => {
+// Handle chat bot requests
+app.get('/chat', async(req, res) => {
     try {
-        // Get the last row of the CSV data
-        const lastRow = data[data.length - 1];
+        // Get the last 50 rows of the CSV data
+        const last50Rows = data.slice(-50);
 
         // Generate the bot's response
         const response = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `${req.body.question}\n${Object.values(lastRow).join('\n')}\n`,
+            prompt: `${req.query.question}\n${last50Rows.map(row => Object.values(row).join('\n')).join('\n')}\n`,
             max_tokens: 500,
         });
 
         // Return the bot's response
-        res.json({ response: response.data.choices[0].text.trim() });
+        res.send(response.data.choices[0].text.trim());
     } catch (error) {
         console.error("Error while running completion:", error.message);
-        res.status(500).json({ error: 'Something went wrong!' });
+        res.status(500).send("Error while running completion");
     }
 });
 
 // Start the server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server running on port ${PORT}`);
+    console.log(`Server listening on port ${PORT}`);
 });
