@@ -42,7 +42,7 @@ app.get('/chat', async(req, res) => {
         const response = await openai.createCompletion({
             model: "text-davinci-003",
             prompt: `${req.query.question}\n${relevantRows.map(row => Object.values(row).join('\n')).join('\n')}\n`,
-            max_tokens: 500,
+            max_tokens: 2000,
         });
 
         // Return the bot's response
