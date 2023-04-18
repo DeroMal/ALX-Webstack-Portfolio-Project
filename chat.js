@@ -52,9 +52,9 @@ app.get('/chat', async(req, res) => {
                 const jsonData = results.map(result => result.json_data);
                 console.log(jsonData);
                 const response = await openai.createCompletion({
-                    model: "text-davinci-003",
+                    model: "text-davinci-002",
                     prompt: `${req.query.question}\n\n${jsonData.join('\n')}\n`,
-                    max_tokens: 500,
+                    max_tokens: 100,
                 });
 
                 // Return the bot's response
