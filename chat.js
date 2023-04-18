@@ -51,7 +51,7 @@ app.get('/chat', async(req, res) => {
                 // Generate the bot's response
                 const jsonData = results.map(result => result.json_data);
                 const response = await openai.createCompletion({
-                    // model: "text-davinci-003",
+                    model: "text-davinci-003",
                     // prompt: `${req.query.question}\n\n${jsonData.join('\n')}\n`,
                     // max_tokens: 100,
                     prompt: `${req.query.question}\n\nHuman: Hello, who are you?\nAI: I am an AI created by OpenAI. How can I help you today?\nHuman: `,
