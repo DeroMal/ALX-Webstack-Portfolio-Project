@@ -3,159 +3,40 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chat Bot Demo</title>
-    <style>
-        * {
-            box-sizing: border-box;
-        }
-        
-        html,
-        body {
-            height: 100%;
-        }
-        
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-        }
-        
-        .header {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-        }
-        
-        .container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            padding: 20px;
-        }
-        
-        .chat-log {
-            flex-grow: 1;
-            overflow-y: auto;
-            margin-bottom: 20px;
-        }
-        
-        .chat-bubble {
-            display: inline-block;
-            padding: 10px;
-            border-radius: 10px;
-            margin-bottom: 10px;
-            max-width: 80%;
-        }
-        
-        .user-bubble {
-            background-color: #eee;
-            float: left;
-        }
-        
-        .bot-bubble {
-            background-color: #4CAF50;
-            color: #fff;
-            float: right;
-        }
-        
-        form {
-            display: flex;
-            margin-top: 20px;
-        }
-        
-        input[type="text"] {
-            flex-grow: 1;
-            padding: 10px;
-            font-size: 16px;
-            border: none;
-            border-radius: 5px 0 0 5px;
-        }
-        
-        button[type="submit"] {
-            padding: 10px;
-            font-size: 16px;
-            background-color: #4CAF50;
-            color: #fff;
-            border: none;
-            border-radius: 0 5px 5px 0;
-            cursor: pointer;
-        }
-    </style>
+    <title>Chat Bot</title>
 </head>
 
 <body>
-    <div class="header">
-        <h1>Chat Bot Demo</h1>
-    </div>
-    <div class="container">
-        <div class="chat-log" id="chat-log"></div>
-        <form id="chat-form">
-            <input type="text" id="chat-input" placeholder="Ask a question...">
-            <button type="submit">Submit</button>
-        </form>
-    </div>
+    <h1>Chat Bot</h1>
+    <form id="chat-form">
+        <label for="question">Ask a question:</label>
+        <input type="text" id="question" name="question">
+        <button type="submit">Submit</button>
+    </form>
+
+    <div id="chat-log"></div>
+
     <script>
-        const chatLog = document.getElementById('chat-log');
-        const chatForm = document.getElementById('chat-form');
-        const chatInput = document.getElementById('chat-input');
+        const chatForm = document.querySelector('#chat-form');
+        const chatLog = document.querySelector('#chat-log');
 
         chatForm.addEventListener('submit', async(event) => {
             event.preventDefault();
 
-            // Get the user's question
-            const question = chatInput.value.trim();
+            const questionInput = document.querySelector('#question');
+            const question = questionInput.value;
 
-            // Clear the input field
-            chatInput.value = '';
+            questionInput.value = '';
 
-            // Add the user's message to the chat log
-            const userBubble = createChatBubble('user', question);
-            chatLog.appendChild(userBubble);
+            const response = await fetch(`/chat?question=${question}`);
+            const text = await response.text();
 
-            // Send the user's question to the chat bot
-            const botResponse = await getBotResponse(question);
+            const messageEl = document.createElement('p');
+            messageEl.innerText = `You: ${question}\nBot: ${text}`;
 
-            // Add the chat bot's response to the chat log
-            const botBubble = createChatBubble('bot', botResponse);
-            chatLog.appendChild(botBubble);
-
-            // Scroll to the bottom of the chat log
-            chatLog.scrollTop = chatLog.scrollHeight;
+            chatLog.appendChild(messageEl);
         });
-
-        async function getBotResponse(question) {
-            try {
-                // Send the user's question to the server
-                const response = await fetch(`/chat?question=${encodeURIComponent(question)}`);
-
-                // Parse the server's response as text
-                const text = await response.text();
-
-                // Return the chat bot's response
-                return text;
-            } catch (error) {
-                console.error(error);
-                return 'Error: Could not connect to server';
-            }
-        }
-
-        function createChatBubble(sender, message) {
-            const bubble = document.createElement('div');
-            bubble.classList.add('chat-bubble');
-
-            const text = document.createTextNode(message);
-            bubble.appendChild(text);
-
-            if (sender === 'user') {
-                bubble.classList.add('user-bubble');
-            } else {
-                bubble.classList.add('bot-bubble');
-            }
-
-            return bubble;
-        }
     </script>
-
 </body>
 
 </html>
