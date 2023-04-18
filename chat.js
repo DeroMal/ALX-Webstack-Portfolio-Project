@@ -35,13 +35,13 @@ app.get('/', (req, res) => {
 // Handle chat bot requests
 app.get('/chat', async(req, res) => {
     try {
-        // Get the last 50 rows of the CSV data
-        const last50Rows = data.slice(-50);
+        // Get the last 10 rows of the CSV data that are relevant to the user's question
+        const relevantRows = data.filter(row => row['timestamp'] > req.query.timestamp).slice(-10);
 
         // Generate the bot's response
         const response = await openai.createCompletion({
             model: "text-davinci-003",
-            prompt: `${req.query.question}\n${last50Rows.map(row => Object.values(row).join('\n')).join('\n')}\n`,
+            prompt: `${req.query.question}\n${relevantRows.map(row => Object.values(row).join('\n')).join('\n')}\n`,
             max_tokens: 500,
         });
 
