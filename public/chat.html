@@ -3,86 +3,158 @@
 
 <head>
     <meta charset="UTF-8">
-    <title>Chatbot</title>
+    <title>Chat Bot Demo</title>
+    <link rel="stylesheet" type="text/css" href="style.css">
     <style>
+        * {
+            box-sizing: border-box;
+        }
+        
+        html,
         body {
-            font-family: sans-serif;
+            height: 100%;
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+        
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 20px;
+        }
+        
+        .container {
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            padding: 20px;
+        }
+        
+        .chat-log {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 20px;
+        }
+        
+        .chat-bubble {
+            display: inline-block;
+            padding: 10px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            max-width: 80%;
+        }
+        
+        .user-bubble {
+            background-color: #eee;
+            float: left;
+        }
+        
+        .bot-bubble {
+            background-color: #4CAF50;
+            color: #fff;
+            float: right;
         }
         
         form {
             display: flex;
-            flex-direction: column;
-            align-items: center;
-            margin-top: 50px;
-        }
-        
-        label {
-            margin-bottom: 10px;
+            margin-top: 20px;
         }
         
         input[type="text"] {
+            flex-grow: 1;
             padding: 10px;
-            border-radius: 5px;
+            font-size: 16px;
             border: none;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
-            margin-bottom: 20px;
+            border-radius: 5px 0 0 5px;
         }
         
-        button {
+        button[type="submit"] {
+            padding: 10px;
+            font-size: 16px;
             background-color: #4CAF50;
-            color: white;
-            padding: 10px;
+            color: #fff;
             border: none;
-            border-radius: 5px;
-            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 0 5px 5px 0;
             cursor: pointer;
-        }
-        
-        #response {
-            margin-top: 20px;
-            border: 1px solid #ccc;
-            padding: 10px;
-            border-radius: 5px;
-            min-height: 100px;
         }
     </style>
 </head>
 
 <body>
-    <h1>Chatbot</h1>
-    <form id="chat-form">
-        <label for="question">Ask a question:</label>
-        <input type="text" id="question" name="question" required>
-        <button type="submit">Submit</button>
-    </form>
-    <div id="response"></div>
-
+    <div class="header">
+        <h1>Chat Bot Demo</h1>
+    </div>
+    <div class="container">
+        <div class="chat-log" id="chat-log"></div>
+        <form id="chat-form">
+            <input type="text" id="chat-input" placeholder="Ask a question...">
+            <button type="submit">Submit</button>
+        </form>
+    </div>
     <script>
-        const form = document.getElementById('chat-form');
-        const responseDiv = document.getElementById('response');
+        const chatLog = document.getElementById('chat-log');
+        const chatForm = document.getElementById('chat-form');
+        const chatInput = document.getElementById('chat-input');
 
-        form.addEventListener('submit', (event) => {
+        chatForm.addEventListener('submit', async(event) => {
             event.preventDefault();
-            const question = document.getElementById('question').value;
 
-            fetch('/chatbot', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json'
-                    },
-                    body: JSON.stringify({
-                        question
-                    })
-                })
-                .then(response => response.json())
-                .then(data => {
-                    responseDiv.innerHTML = data.response;
-                })
-                .catch(error => {
-                    console.error(error);
-                    responseDiv.innerHTML = 'Something went wrong!';
-                });
+            // Get the user's question
+            const question = chatInput.value.trim();
+
+            // Clear the input field
+            chatInput.value = '';
+
+            // Add the user's message to the chat log
+            const userBubble = createChatBubble('user', question);
+            chatLog.appendChild(userBubble);
+
+            // Send the user's question to the chat bot
+            const botResponse = await getBotResponse(question);
+
+            // Add the chat bot's response to the chat log
+            const botBubble = createChatBubble('bot', botResponse);
+            chatLog.appendChild(botBubble);
+
+            // Scroll to the bottom of the chat log
+            chatLog.scrollTop = chatLog.scrollHeight;
         });
+
+        async function getBotResponse(question) {
+            try {
+                // Send the user's question to the server
+                const response = await fetch(`/chat?question=${encodeURIComponent(question)}`);
+
+                // Parse the server's response as text
+                const text = await response.text();
+
+                // Return the chat bot's response
+                return text;
+            } catch (error) {
+                console.error(error);
+                return 'Error: Could not connect to server';
+            }
+        }
+
+        function createChatBubble(sender, message) {
+            const bubble = document.createElement('div');
+            bubble.classList.add('chat-bubble');
+
+            const text = document.createTextNode(message);
+            bubble.appendChild(text);
+
+            if (sender === 'user') {
+                bubble.classList.add('user-bubble');
+            } else {
+                bubble.classList.add('bot-bubble');
+            }
+
+            return bubble;
+        }
     </script>
 </body>
 
