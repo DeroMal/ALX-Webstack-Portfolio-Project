@@ -43,6 +43,11 @@
             flex-grow: 1;
         }
         
+        .you-message {
+            color: #3E8E41;
+            font-weight: bold;
+        }
+        
         button[type="submit"] {
             padding: 10px;
             font-size: 18px;
@@ -125,7 +130,7 @@
             const text = await response.text();
 
             const messageEl = document.createElement('p');
-            messageEl.innerText = `You: ${question}\nBot: ${text}`;
+            messageEl.innerHTML = `<span class="you-message">You: ${question}</span><br><span class="bot-message">Bot: ${text}</span>`;
 
             chatLog.appendChild(messageEl);
 
