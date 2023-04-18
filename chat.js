@@ -3,6 +3,7 @@ const app = express();
 const { Configuration, OpenAIApi } = require("openai");
 require('dotenv').config();
 const mysql = require('mysql');
+const path = require('path');
 
 // Set up OpenAI API configuration
 const configuration = new Configuration({
