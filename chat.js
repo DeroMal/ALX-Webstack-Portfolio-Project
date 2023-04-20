@@ -58,7 +58,7 @@ app.get('/chat', async(req, res) => {
                     // prompt: `${req.query.question}\n\n${jsonData.join('\n')}\n`,
                     // max_tokens: 100,
                     prompt: `${req.query.question}`,
-                    context: sensorData,
+                    // context: sensorData,
                     temperature: 0.9,
                     max_tokens: 150,
                     top_p: 1,
