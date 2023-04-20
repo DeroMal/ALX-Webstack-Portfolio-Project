@@ -62,10 +62,15 @@ app.post('/chat', async(req, res) => {
                     engine: 'text-davinci-003',
                     prompt: prompt,
                     max_tokens: 500,
+                }).catch((error) => {
+                    console.error('Error while running completion:', error.message);
+                    res.status(500).send('Error while running completion');
                 });
 
                 // Return the bot's response
-                res.send(response.choices[0].text.trim());
+                if (response) {
+                    res.send(response.choices[0].text.trim());
+                }
             }
         });
     } catch (error) {
@@ -73,6 +78,7 @@ app.post('/chat', async(req, res) => {
         res.status(500).send('Error while running completion');
     }
 });
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;
