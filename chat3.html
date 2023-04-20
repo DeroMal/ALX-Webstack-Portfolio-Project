@@ -139,7 +139,7 @@
                 chatInput.value = "";
 
                 // Send message to bot
-                fetch(`/api/chatbot?message=${message}`)
+                fetch(`/api/chatbot?question=${message}`)
                     .then(response => response.json())
                     .then(data => {
                         // Add bot message to chat box
