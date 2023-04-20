@@ -43,6 +43,8 @@ app.get('/chat', async(req, res) => {
     try {
         // Query the MySQL database for the relevant JSON data
         const queryString = `SELECT * FROM temperature_data ORDER BY dateTime DESC LIMIT 20`;
+        const sensorData = "Temperature readings: 72.5F, 73.1F, 73.8F, 74.2F";
+
         connection.query(queryString, async(error, results, fields) => {
             if (error) {
                 console.error('Error querying MySQL database:', error.message);
@@ -53,10 +55,10 @@ app.get('/chat', async(req, res) => {
                 console.log(`${jsonData}`);
                 const response = await openai.createCompletion({
                     model: "text-davinci-003",
-                    // context: ["Previous conversation turn: Hello, how are you?", "Previous conversation turn: I'm doing well, thanks. How about you?"],
                     // prompt: `${req.query.question}\n\n${jsonData.join('\n')}\n`,
                     // max_tokens: 100,
                     prompt: `${req.query.question}`,
+                    context: sensorData,
                     temperature: 0.9,
                     max_tokens: 150,
                     top_p: 1,
