@@ -10,6 +10,8 @@
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.42",
     "mysql": "^2.18.1",
-    "openai": "^3.2.1"
+    "mysql2": "^3.2.3",
+    "openai": "^3.2.1",
+    "promise": "^8.3.0"
   }
 }

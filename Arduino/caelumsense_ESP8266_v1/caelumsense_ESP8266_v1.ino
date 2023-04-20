@@ -28,8 +28,8 @@ float temperature = 0;     // Initializing the temperature variable
 int lightLevel = 0;        // Initializing the lightLevel variable
 
 #ifndef STASSID
-#define STASSID "DerrickML"
-#define STAPSK  "1234567890"
+#define STASSID "JohnBV"
+#define STAPSK  "derrickm"
 #endif
 
 const char* ssid = STASSID;
