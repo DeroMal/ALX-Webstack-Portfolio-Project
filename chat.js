@@ -52,9 +52,10 @@ app.get('/chat', async(req, res) => {
                 const jsonData = results.map(result => result.json_data);
                 const response = await openai.createCompletion({
                     model: "text-davinci-003",
+                    context: jsonData,
                     // prompt: `${req.query.question}\n\n${jsonData.join('\n')}\n`,
                     // max_tokens: 100,
-                    prompt: `${jsonData.join('\n')}\n\n${req.query.question}\n`,
+                    prompt: `${req.query.question}`,
                     temperature: 0.9,
                     max_tokens: 150,
                     top_p: 1,
