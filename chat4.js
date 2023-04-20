@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const OpenAI = require('openai');
+const { OpenAIApi } = require('openai');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const mysql = require('mysql');
 
 // Set up OpenAI API key
-const openai = new OpenAIApi(process.env.OPENAI_API_KEY);
+const openai = new OpenAIApi({ apiKey: process.env.OPENAI_API_KEY });
 
 // Set up MySQL connection
 const dbCredentials = require('./db'); // Import file containing credentials
