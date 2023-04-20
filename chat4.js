@@ -4,7 +4,7 @@ const mysql = require('mysql');
 const openai = require('openai');
 
 // Set your OpenAI API key
-openai.apiKey = 'your_openai_api_key';
+openai.apiKey = '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';
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -34,7 +34,7 @@ app.post('/chat', async(req, res) => {
         return res.status(400).json({ error: 'Please provide a question.' });
     }
 
-    const sensorDataQuery = 'SELECT temperature, humidity FROM sensor_data ORDER BY timestamp DESC LIMIT 50';
+    const sensorDataQuery = 'SELECT temperature, humidity FROM sensor_data ORDER BY dateTime DESC LIMIT 50';
     db.query(sensorDataQuery, async(err, results) => {
         if (err) throw err;
 
