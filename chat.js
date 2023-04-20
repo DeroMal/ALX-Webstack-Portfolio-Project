@@ -35,7 +35,7 @@ connection.connect((err) => {
 // Serve the web interface
 app.use(express.static(path.join(__dirname, 'public')));
 app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'chat.html'));
+    res.sendFile(path.join(__dirname, 'chat3.html'));
 });
 
 // Handle chat bot requests
