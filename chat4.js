@@ -1,13 +1,13 @@
 const express = require('express');
 const app = express();
 const path = require('path');
-const openai = require('openai');
+const OpenAI = require('openai');
 const bodyParser = require('body-parser');
 require('dotenv').config();
 const mysql = require('mysql');
 
 // Set up OpenAI API key
-openai.apiKey = process.env.OPENAI_API_KEY;
+const openai = new OpenAI(process.env.OPENAI_API_KEY);
 
 // Set up MySQL connection
 const dbCredentials = require('./db'); // Import file containing credentials
@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 app.post('/chat', async(req, res) => {
     try {
         // Query the MySQL database for the relevant data
-        const queryString = 'SELECT temperature, humidity FROM temp_humid ORDER BY dateTime DESC LIMIT 50';
+        const queryString = 'SELECT temperature, humidity FROM temperature_data ORDER BY dateTime DESC LIMIT 50';
         connection.query(queryString, async(error, results, fields) => {
             if (error) {
                 console.error('Error querying MySQL database:', error.message);
@@ -58,7 +58,7 @@ app.post('/chat', async(req, res) => {
                 const prompt = `${sensorDataText}\n${req.body.question}`;
 
                 // Generate the bot's response
-                const response = await openai.createCompletion({
+                const response = await openai.complete({
                     engine: 'text-davinci-003',
                     prompt: prompt,
                     max_tokens: 500,
