@@ -7,7 +7,7 @@ require('dotenv').config();
 const mysql = require('mysql');
 
 // Set up OpenAI API key
-const openai = new OpenAI(process.env.OPENAI_API_KEY);
+const openai = new OpenAIApi(process.env.OPENAI_API_KEY);
 
 // Set up MySQL connection
 const dbCredentials = require('./db'); // Import file containing credentials
