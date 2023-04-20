@@ -55,7 +55,9 @@ app.post('/chat', async(req, res) => {
                 });
 
                 // Include the sensor data in the prompt
-                const prompt = `${sensorDataText}\n${req.body.question}`;
+                // const prompt = `${sensorDataText}\n${req.body.question}`;
+                const prompt = `${req.body.question}`;
+
 
                 // Generate the bot's response
                 const response = await openai.createCompletion({
