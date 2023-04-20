@@ -58,7 +58,7 @@ app.post('/chat', async(req, res) => {
                 const prompt = `${sensorDataText}\n${req.body.question}`;
 
                 // Generate the bot's response
-                const response = await openai.complete({
+                const response = await openai.createCompletion({
                     engine: 'text-davinci-003',
                     prompt: prompt,
                     max_tokens: 500,
