@@ -42,7 +42,7 @@ app.get('/', (req, res) => {
 app.post('/chat', async(req, res) => {
     try {
         // Query the MySQL database for the relevant data
-        const queryString = 'SELECT temperature, humidity FROM temperature_data ORDER BY dateTime DESC LIMIT 50';
+        const queryString = 'SELECT temperature, humidity FROM temp_humid ORDER BY dateTime DESC LIMIT 50';
         connection.query(queryString, async(error, results, fields) => {
             if (error) {
                 console.error('Error querying MySQL database:', error.message);
