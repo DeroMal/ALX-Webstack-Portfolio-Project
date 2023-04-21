@@ -350,7 +350,7 @@ app.post('/api/chat', async(req, res) => {
             // Generate the bot's response
             const response = await openai.createCompletion({
                 model: "text-davinci-003",
-                prompt: `I am a knowledgeable Caelum (AI) with access to the following data:\n${dataDescription}\nUser: ${question}\nCaelum (AI):`,
+                prompt: `I am a knowledgeable Caelum (AI) and created by Derrick L. Mayiku. I only so far have access to the following data (Temperature and Humdity) with the timestamps:\n${dataDescription}\nUser: ${question}\nCaelum (AI):`,
                 max_tokens: 500,
                 n: 1,
                 stop: ["\n"],
