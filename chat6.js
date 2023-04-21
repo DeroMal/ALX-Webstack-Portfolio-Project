@@ -13,12 +13,15 @@ app.get('/', (req, res) => {
 });
 
 
-// Create a MySQL connection
+// Set up MySQL connection
+const dbCredentials = require('./db'); //Import file containing credentials
+
+// Establish database connection using the credentials
 const connection = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database: "sensgro"
+    host: dbCredentials.host,
+    user: dbCredentials.user,
+    password: dbCredentials.password,
+    database: dbCredentials.database
 });
 
 // Set up OpenAI API configuration
