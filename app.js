@@ -6,6 +6,7 @@ const path = require('path');
 const mysql = require('mysql');
 const ejs = require('ejs');
 const moment = require('moment-timezone');
+const cron = require('node-cron');
 const { Configuration, OpenAIApi } = require('openai');
 
 const timezone = 'Africa/Kampala';
@@ -368,6 +369,74 @@ app.post('/api/chat', async(req, res) => {
     }
 });
 /**=======END CHAT ROUTE=========================**/
+
+/**======UPDATE temp_humid TABLE=============**/
+// Define a function to retrieve the latest temperature and humidity readings
+function getLatestReadings() {
+    return new Promise((resolve, reject) => {
+        const query = `
+        SELECT temperature, dateTime FROM temperature_data
+        ORDER BY dateTime DESC LIMIT 1;
+        SELECT humidity, dateTime FROM humidity_data
+        ORDER BY dateTime DESC LIMIT 1;
+      `;
+
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                const temperature = results[0][0].temperature;
+                const temperatureDateTime = moment(results[0][0].dateTime).format('YYYY-MM-DD HH:mm:ss');
+                const humidity = results[1][0].humidity;
+                const humidityDateTime = moment(results[1][0].dateTime).format('YYYY-MM-DD HH:mm:ss');
+
+                resolve({
+                    temperature,
+                    temperatureDateTime,
+                    humidity,
+                    humidityDateTime
+                });
+            }
+        });
+    });
+}
+
+// Define a function to insert the latest temperature and humidity readings into the temp_humid table
+function insertLatestReadings(temperature, temperatureDateTime, humidity, humidityDateTime) {
+    return new Promise((resolve, reject) => {
+        const query = `
+        INSERT INTO temp_humid (temperature, humidity, dateTime)
+        VALUES (${temperature}, ${humidity}, '${temperatureDateTime}');
+      `;
+
+        pool.query(query, (error, results) => {
+            if (error) {
+                reject(error);
+            } else {
+                resolve(results);
+            }
+        });
+    });
+}
+
+// Define a function to update the temp_humid table
+function updateTempHumidTable() {
+    getLatestReadings().then(({ temperature, temperatureDateTime, humidity, humidityDateTime }) => {
+        insertLatestReadings(temperature, temperatureDateTime, humidity, humidityDateTime).then((results) => {
+            console.log('Latest readings inserted into temp_humid table:', results);
+        }).catch((error) => {
+            console.error('Error inserting latest readings into temp_humid table:', error);
+        });
+    }).catch((error) => {
+        console.error('Error retrieving latest readings:', error);
+    });
+}
+
+// Update the temp_humid table every 30 seconds
+setInterval(() => {
+    updateTempHumidTable();
+}, 30000);
+/**======ENDO OF UPDATE temp_humid TABLE=============**/
 
 // Set up view engine and template directory
 app.set('view engine', 'ejs');
