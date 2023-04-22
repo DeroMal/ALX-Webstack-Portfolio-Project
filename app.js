@@ -317,7 +317,6 @@ let sensorData = [];
 
 // Define a function to update the sensor data
 async function updateSensorData() {
-    // Define the getDataFromDatabase function inside the updateSensorData function
     async function getDataFromDatabase() {
         return new Promise((resolve, reject) => {
             connection.query('SELECT * FROM temp_humid ORDER BY dateTime DESC LIMIT 50', (err, results) => {
@@ -339,9 +338,9 @@ async function updateSensorData() {
     }
 }
 
-// Update the sensor data initially and every 5 seconds thereafter
+// Update the sensor data initially and every 30 seconds thereafter
 updateSensorData();
-setInterval(updateSensorData, 5000);
+setInterval(updateSensorData, 30000);
 
 // API endpoint for the chatbot
 app.post('/api/chat', async(req, res) => {
@@ -352,10 +351,13 @@ app.post('/api/chat', async(req, res) => {
         const data = sensorData;
 
         // Format the data as a table
-        const dataAsText = data.map(row => Object.values(row).join(', ')).join('\n');
+        const dataAsText = data.map(row => {
+            const dateTime = moment.tz(row.dateTime, 'Africa/Kampala').format('YYYY-MM-DD HH:mm:ss');
+            return [dateTime, row.temperature, row.humidity].join(', ');
+        }).join('\n');
 
         // Add a brief description of the data
-        const dataDescription = `The table below shows the last 50 temperature and humidity sensor readings in the format "Timestamp, Temperature, Humidity":\n${dataAsText}\n`;
+        const dataDescription = `The table below shows the last 50 temperature and humidity sensor readings in the format "Timestamp (Africa/Kampala), Temperature, Humidity":\n${dataAsText}\n`;
 
         let responseText = "";
         let attempts = 0;
