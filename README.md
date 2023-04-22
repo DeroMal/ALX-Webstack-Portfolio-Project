@@ -25,6 +25,7 @@ Here are some screenshots of the CaelumSense project:
 | | |
 |:-------------------------:|
 | | 
+
 |:-------------------------:|:-------------------------:|
 |**Dashboard Light mode**<br>![Screenshot 2](/screenshots/caelumsense_dash_light.png)|**Dashboard Dark mode**<br>![Screenshot 3](/screenshots/caelumsense_dash_dark.png)|
 |**Table Page in Light Mode**<br>![Screenshot 4](/screenshots/caelumsense_table_light.png)|**Table Page in Dark Mode**<br>![Screenshot 5](/screenshots/caelumsense_table_dark.png)|
