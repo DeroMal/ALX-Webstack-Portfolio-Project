@@ -21,9 +21,10 @@
 Here are some screenshots of the CaelumSense project:
 
 ### Hardware set-up:
-![Screenshot 1](/screenshots/IMG_20230413_143824_578.jpg)
-|:-------------------------:|
 | | 
+|:-------------------------:|
+|**Hardware Set-up**<br>![Screenshot 1](/screenshots/IMG_20230413_143824_578.jpg)
+
 
 | | |
 |:-------------------------:|:-------------------------:|
