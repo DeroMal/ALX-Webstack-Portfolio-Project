@@ -26,6 +26,7 @@ Here are some screenshots of the CaelumSense project:
 |**Table Page in Light Mode**<br>![Screenshot 4](/screenshots/caelumsense_table_light.png)|**Table Page in Dark Mode**<br>![Screenshot 5](/screenshots/caelumsense_table_dark.png)|
 |**Chat Page in Dark Mode**<br>![Screenshot 6](/screenshots/caelumsense_chart_light.png)|**Chat Page in Dark Mode**<br>![Screenshot 7](/screenshots/caelumsense_chart_dark.png)|
 | | 
+
 |:-------------------------:|
 |**Hardware Set-up**<br>![Screenshot 1](/screenshots/IMG_20230413_143824_578.jpg)
 
