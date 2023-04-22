@@ -357,7 +357,7 @@ app.post('/api/chat', async(req, res) => {
         }).join('\n');
 
         // Add a brief description of the data
-        const dataDescription = `The table below shows the last 50 temperature and humidity sensor readings in the format "Timestamp (Africa/Kampala), Temperature, Humidity":\n${dataAsText}\n`;
+        const dataDescription = `The table below shows the last 100 temperature and humidity sensor readings in the format "Timestamp (Africa/Kampala), Temperature, Humidity":\n${dataAsText}\n`;
 
         let responseText = "";
         let attempts = 0;
