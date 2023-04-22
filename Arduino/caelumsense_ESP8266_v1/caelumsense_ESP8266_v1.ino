@@ -115,6 +115,7 @@ void sensorData() {
 void sensFetch() {
   if (esp.available()) {              // Checking if there's any data available to be read from the esp object
     String jsonString = esp.readStringUntil('\n');  // Reading a string until we encounter a newline character ('\n') and storing it as jsonString
+    delay(2000);
     Serial.println(jsonString);        // Printing the received JSON string to the serial monitor
 
     StaticJsonDocument<200> doc;       // Creating a new StaticJsonDocument object with a capacity of 200 bytes

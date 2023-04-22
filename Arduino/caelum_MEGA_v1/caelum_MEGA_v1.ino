@@ -64,7 +64,9 @@ void loop() {
   String jsonString; // Create a new string to hold the serialized JSON data
   serializeJson(doc, jsonString); // Serialize the JSON data into a string using the ArduinoJson library
 
-  esp.println(jsonString); // Send the serialized JSON data to the ESP8266 via software serial communication
+  esp.print(jsonString); // Send the serialized JSON data to the ESP8266 via software serial communication
+  esp.print('\n'); // Send a newline character to terminate the JSON data
+ 
   Serial.println(jsonString); // Print the serialized JSON data to the serial monitor
 
   delay(500); // Delay for half a second
