@@ -19,20 +19,46 @@
 ## Screenshots
 
 Here are some screenshots of the CaelumSense project:
-### Hardware set-up:
-![Screenshot 1](/screenshots/IMG_20230413_143824_578.jpg)
-### Dashboard Light mode:
-![Screenshot 2](/screenshots/caelumsense_dash_light.png)
-### Dashboard Dark mode:
-![Screenshot 3](/screenshots/caelumsense_dash_dark.png)
-### Table Page in Light Mode:
-![Screenshot 4](/screenshots/caelumsense_table_light.png)
-### Table Page in Dark Mode:
-![Screenshot 5](/screenshots/caelumsense_table_dark.png)
-### Chat Page in Dark Mode:
-![Screenshot 6](/screenshots/caelumsense_chart_light.png)
-### Chat Page in Dark Mode:
-![Screenshot 7](/screenshots/caelumsense_chart_dark.png)
+
+<div style="display:flex; flex-wrap:wrap;">
+  <div style="flex:50%; padding-right:5px;">
+    <h4>Hardware set-up:</h4>
+    <img src="/screenshots/IMG_20230413_143824_578.jpg" alt="Screenshot 1">
+  </div>
+  <div style="flex:50%; padding-left:5px;">
+    <h4>Dashboard Light mode:</h4>
+    <img src="/screenshots/caelumsense_dash_light.png" alt="Screenshot 2">
+  </div>
+</div>
+
+<div style="display:flex; flex-wrap:wrap;">
+  <div style="flex:50%; padding-right:5px;">
+    <h4>Dashboard Dark mode:</h4>
+    <img src="/screenshots/caelumsense_dash_dark.png" alt="Screenshot 3">
+  </div>
+  <div style="flex:50%; padding-left:5px;">
+    <h4>Table Page in Light Mode:</h4>
+    <img src="/screenshots/caelumsense_table_light.png" alt="Screenshot 4">
+  </div>
+</div>
+
+<div style="display:flex; flex-wrap:wrap;">
+  <div style="flex:50%; padding-right:5px;">
+    <h4>Table Page in Dark Mode:</h4>
+    <img src="/screenshots/caelumsense_table_dark.png" alt="Screenshot 5">
+  </div>
+  <div style="flex:50%; padding-left:5px;">
+    <h4>Chat Page in Dark Mode:</h4>
+    <img src="/screenshots/caelumsense_chart_light.png" alt="Screenshot 6">
+  </div>
+</div>
+
+<div style="display:flex; flex-wrap:wrap;">
+  <div style="flex:50%; padding-right:5px;">
+    <h4>Chat Page in Dark Mode:</h4>
+    <img src="/screenshots/caelumsense_chart_dark.png" alt="Screenshot 7">
+  </div>
+</div>
 
 ## Features
 
