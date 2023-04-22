@@ -147,4 +147,4 @@ The CaelumSense project is licensed under the [MIT license](https://opensource.o
 
 ## Contact
 
-For any questions, comments, or concerns, please feel free to contact the CaelumSense team at caelumsense@gmail.com.
+For any questions, comments, or concerns, please feel free to contact the CaelumSense team at derrickmal123@gmail.com.
