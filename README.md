@@ -24,10 +24,10 @@ Here are some screenshots of the CaelumSense project:
 ![Screenshot 1](/screenshots/IMG_20230413_143824_578.jpg)
 | | |
 |:-------------------------:|:-------------------------:|
-|**Dashboard Light mode**<br>![Screenshot 2](/screenshots/caelumsense_dash_light.png)|
-|**Dashboard Dark mode**<br>![Screenshot 3](/screenshots/caelumsense_dash_dark.png)|**Table Page in Light Mode**<br>![Screenshot 4](/screenshots/caelumsense_table_light.png)|
-|**Table Page in Dark Mode**<br>![Screenshot 5](/screenshots/caelumsense_table_dark.png)|**Chat Page in Dark Mode**<br>![Screenshot 6](/screenshots/caelumsense_chart_light.png)|
-| | **Chat Page in Dark Mode**<br>![Screenshot 7](/screenshots/caelumsense_chart_dark.png)|
+|**Dashboard Light mode**<br>![Screenshot 2](/screenshots/caelumsense_dash_light.png)|**Dashboard Dark mode**<br>![Screenshot 3](/screenshots/caelumsense_dash_dark.png)|
+|**Table Page in Light Mode**<br>![Screenshot 4](/screenshots/caelumsense_table_light.png)|**Table Page in Dark Mode**<br>![Screenshot 5](/screenshots/caelumsense_table_dark.png)|
+|**Chat Page in Dark Mode**<br>![Screenshot 6](/screenshots/caelumsense_chart_light.png)|**Chat Page in Dark Mode**<br>![Screenshot 7](/screenshots/caelumsense_chart_dark.png)|
+| | 
 
 ## Features
 
