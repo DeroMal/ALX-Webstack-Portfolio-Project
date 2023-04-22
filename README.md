@@ -10,6 +10,7 @@
 - [Technologies Used](#technologies-used)
 - [Hardware Requirements](#hardware-requirements)
 - [Software Requirements](#software-requirements)
+- [Caelum Chatbot AI Assistant](#CaelumSense-Chatbot)
 - [Installation](#installation)
 - [Usage](#usage)
 - [Contributing](#contributing)
@@ -36,6 +37,7 @@ Here are some screenshots of the CaelumSense project:
 ## Features
 
 - Real-time monitoring of humidity, temperature, and light levels in a room
+- A.I ChatBot (Caelum) assistant
 - Web-based user interface for displaying sensor data
 - Customizable graphs and tables for displaying sensor data
 - Remote monitoring of a room through an internet connection
@@ -47,6 +49,7 @@ Here are some screenshots of the CaelumSense project:
 CaelumSense is built using the following technologies:
 
 - Server: Node.js
+- ChatBot: OpenAI API; Text-davinci-003 model
 - Frontend: HTML/CSS, JavaScript, Bootstrap, Material-UI, Creative Tim Dashboard Material-UI
 - Backend: Node.js, SQL
 - Storage: MySQL database
@@ -68,8 +71,42 @@ To build and use the CaelumSense system, you will need the following hardware co
 To install and run the CaelumSense system, you will need the following software components:
 
 - Node.js
+- OpenAI API
 - MySQL database
 
+## CaelumSense Chatbot
+
+The CaelumSense Chatbot is a conversational agent that provides real-time temperature and humidity sensor data from the CaelumSense system. The chatbot is powered by OpenAI's GPT-3.5 architecture and can be accessed through a web-based user interface.
+
+### Chatbot Features
+
+- Provides real-time temperature and humidity sensor data from the CaelumSense system
+- Allows users to ask questions in natural language
+- Responds to user queries with relevant and accurate information
+- Can handle multiple users simultaneously
+- Uses OpenAI's GPT-3.5 architecture to generate responses
+
+### Chatbot Technologies Used
+
+The CaelumSense Chatbot is built using the following technologies:
+
+- Frontend: HTML/CSS, JavaScript, Bootstrap
+- Backend: Node.js, Express.js
+- API: OpenAI's GPT-3.5
+
+### Chatbot Usage
+
+To use the CaelumSense Chatbot, follow these steps:
+
+1. Open a web browser and navigate to the CaelumSense dashboard.
+2. Click on the chat icon to open the chatbot interface.
+3. Type your question in the input field and press Enter or click the Send button.
+4. The chatbot will generate a response based on your query.
+
+### Chatbot Limitations
+
+- The chatbot can only provide sensor data from the last 100 readings.
+- The chatbot is currently only able to respond to queries related to temperature and humidity data.
 ## Installation
 
 To install and set up the CaelumSense system, follow these steps:
