@@ -23,8 +23,6 @@ Here are some screenshots of the CaelumSense project:
 ### Hardware set-up:
 ![Screenshot 1](/screenshots/IMG_20230413_143824_578.jpg)
 | | |
-|:-------------------------:|
-| | 
 
 |:-------------------------:|:-------------------------:|
 |**Dashboard Light mode**<br>![Screenshot 2](/screenshots/caelumsense_dash_light.png)|**Dashboard Dark mode**<br>![Screenshot 3](/screenshots/caelumsense_dash_dark.png)|
