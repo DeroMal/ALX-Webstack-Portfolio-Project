@@ -312,30 +312,44 @@ app.post('/actuator-data', (req, res) => {
 });
 
 /**====CHAT Establishment routes=================**/
-// Retrieve data from the database
-async function getDataFromDatabase() {
-    return new Promise((resolve, reject) => {
-        connection.query('SELECT * FROM temp_humid ORDER BY dateTime DESC LIMIT 50', (err, results) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve(results);
-            }
+// Define a global variable to store the sensor data
+let sensorData = [];
+
+// Define a function to update the sensor data
+async function updateSensorData() {
+    // Define the getDataFromDatabase function inside the updateSensorData function
+    async function getDataFromDatabase() {
+        return new Promise((resolve, reject) => {
+            connection.query('SELECT * FROM temp_humid ORDER BY dateTime DESC LIMIT 50', (err, results) => {
+                if (err) {
+                    reject(err);
+                } else {
+                    resolve(results);
+                }
+            });
         });
-    });
+    }
+
+    try {
+        // Get the last 50 rows of sensor data from the database
+        const data = await getDataFromDatabase();
+        sensorData = data;
+    } catch (error) {
+        console.error("Error while getting sensor data:", error.message);
+    }
 }
 
-// Configure Express app
-app.use(cors());
-app.use(express.json());
+// Update the sensor data initially and every 5 seconds thereafter
+updateSensorData();
+setInterval(updateSensorData, 5000);
 
 // API endpoint for the chatbot
 app.post('/api/chat', async(req, res) => {
     const question = req.body.question;
 
     try {
-        // Get the last 50 rows of sensor data
-        const data = await getDataFromDatabase();
+        // Use the global sensorData variable instead of calling getDataFromDatabase
+        const data = sensorData;
 
         // Format the data as a table
         const dataAsText = data.map(row => Object.values(row).join(', ')).join('\n');
@@ -394,16 +408,16 @@ INSERT INTO temp_humid (temperature, humidity, dateTime)
 SELECT t.temperature, h.humidity, t.dateTime
 FROM temperature_data t
 JOIN humidity_data h ON t.dateTime = h.dateTime
-WHERE t.dateTime >= DATE_SUB(NOW(), INTERVAL 30 SECOND)
+WHERE t.dateTime >= DATE_SUB(NOW(), INTERVAL 5 SECOND)
 `;
 
-// execute the query to insert data into the new table every 30 seconds
+// execute the query to insert data into the new table every 5 seconds
 setInterval(() => {
     connection.query(insertDataQuery, (error, results, fields) => {
         if (error) throw error;
         console.log('Data inserted successfully');
     });
-}, 30000);
+}, 5000);
 /**======ENDO OF UPDATE temp_humid TABLE=============**/
 
 // Set up view engine and template directory
