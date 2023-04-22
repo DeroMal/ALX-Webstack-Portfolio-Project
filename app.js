@@ -319,7 +319,7 @@ let sensorData = [];
 async function updateSensorData() {
     async function getDataFromDatabase() {
         return new Promise((resolve, reject) => {
-            connection.query('SELECT * FROM temp_humid ORDER BY dateTime DESC LIMIT 50', (err, results) => {
+            connection.query('SELECT * FROM temp_humid ORDER BY dateTime DESC LIMIT 100', (err, results) => {
                 if (err) {
                     reject(err);
                 } else {
