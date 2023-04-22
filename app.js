@@ -381,7 +381,7 @@ app.post('/api/chat', async(req, res) => {
         // Instead of printing the response, send it as a JSON object
         res.json({ response: responseText });
     } catch (error) {
-        console.error("Error while running completion:", error.message);
+        console.error("Caelum is Turned off >> Error while running completion:", error.message);
         res.status(500).json({ error: error.message });
     }
 });
