@@ -30,8 +30,8 @@ SoftwareSerial esp(10, 11); // RX, TX: create a new software serial object for c
 DHT dht(DHTPIN, DHTTYPE); // Create a new instance of the DHT class
 
 void setup() {
-  Serial.begin(9600); // Initialize the serial monitor
-  esp.begin(9600); // Initialize the software serial communication with the ESP8266
+  Serial.begin(115200); // Initialize the serial monitor
+  esp.begin(115200); // Initialize the software serial communication with the ESP8266
   dht.begin(); // Initialize the DHT sensor
   pinMode(LDRPIN, INPUT); // Set the mode of the LDR sensor pin to input
 }
