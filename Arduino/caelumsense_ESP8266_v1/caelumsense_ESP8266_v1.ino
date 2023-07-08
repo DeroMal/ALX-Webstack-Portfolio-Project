@@ -41,8 +41,8 @@ const char* fingerprint = "62:B1:85:58:D3:BD:12:54:D1:A1:4C:29:13:73:7B:CF:4B:F3
 WiFiClientSecure client;
 
 void setup() {
-  Serial.begin(115200);      // Starting the serial communication with a baud rate of 9600
-  esp.begin(115200);         // Starting the SoftwareSerial communication with a baud rate of 9600
+  Serial.begin(115200);      // Starting the serial communication with a baud rate of 115200
+  esp.begin(115200);         // Starting the SoftwareSerial communication with a baud rate of 115200
 
   Serial.println();
   netConnect();
