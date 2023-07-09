@@ -14,7 +14,7 @@ const timezone = 'Africa/Kampala';
 const app = express();
 
 app.use(function(req, res, next) {
-    res.header("Access-Control-Allow-Origin", "https://caelumsense.rec22test.site/");
+    res.header("Access-Control-Allow-Origin", "https://caelumsense.derrickml.com/");
     res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
     next();
 });

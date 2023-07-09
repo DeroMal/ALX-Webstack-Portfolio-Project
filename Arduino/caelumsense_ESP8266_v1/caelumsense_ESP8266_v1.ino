@@ -34,7 +34,7 @@ int lightLevel = 0;        // Initializing the lightLevel variable
 
 const char* ssid = STASSID;
 const char* password = STAPSK;
-const char* host = "caelumsense.rec22test.site";
+const char* host = "caelumsense.derrickml.com";
 const int httpsPort = 443;
 const char* fingerprint = "62:B1:85:58:D3:BD:12:54:D1:A1:4C:29:13:73:7B:CF:4B:F3:72:D3";
 
@@ -93,7 +93,7 @@ void sensorData() {
   Serial.println("Sending Sensor data to server...");
   if (client.connect(host, httpsPort)) {
     client.println("POST /sensor-data HTTP/1.1");
-    client.println("Host: caelumsense.rec22test.site");
+    client.println("Host: caelumsense.derrickml.com");
     client.println("Content-Type: application/json");
     client.println("Content-Length: " + String(data.length()));
     client.println();
