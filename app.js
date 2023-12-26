@@ -347,47 +347,44 @@ app.post('/api/chat', async(req, res) => {
     const question = req.body.question;
 
     try {
-        // Use the global sensorData variable instead of calling getDataFromDatabase
+        // Reuse sensorData efficiently
         const data = sensorData;
 
-        // Format the data as a table
+        // Format the data for readability
         const dataAsText = data.map(row => {
             const dateTime = moment.tz(row.dateTime, 'Africa/Kampala').format('YYYY-MM-DD HH:mm:ss');
-            return [dateTime, row.temperature, row.humidity].join(', ');
-        }).join('\n');
+            return `${dateTime}, ${row.temperature}, ${row.humidity}`;
+        }).join('\\n'); // Escape newlines
 
-        // Add a brief description of the data
-        const dataDescription = `The table below shows the last 100 temperature and humidity sensor readings in the format "Timestamp (Africa/Kampala), Temperature, Humidity":\n${dataAsText}\n`;
+        const dataDescription = `The table below shows the last 100 temperature and humidity sensor readings in the format "Timestamp (Africa/Kampala), Temperature, Humidity":\\n${dataAsText}\\n`;
 
         let responseText = "";
         let attempts = 0;
 
-        // Retry until a valid response is generated or a maximum number of attempts is reached
         while (responseText.trim().length < 10 && attempts < 5) {
-            // Generate the bot's response
             const response = await openai.createCompletion({
-                // text-davinci-003
-                // model: "gpt-4-32k",
-                // model: "gpt-3.5-turbo",
                 model: "text-davinci-003",
-                prompt: `I am a knowledgeable Caelum (AI) and created by Derrick L. Mayiku. I only so far have access to the following data (Temperature and Humdity) with the corresponding timestamps (Please note that I won't be able to list the data in a table format or listing format:x):\n${dataDescription}\nUser: ${question}\nCaelum (AI):`,
+                prompt: `I am a knowledgeable Caelum (AI) and created by Derrick L. Mayiku. I only so far have access to the following data (Temperature and Humdity) with the corresponding timestamps (Please note that I won't be able to list the data in a table format or listing format:x):\\n${dataDescription}\\nUser: ${question}\\nCaelum (AI):`,
                 max_tokens: 800,
                 n: 1,
-                stop: ["\n"],
+                stop: ["\\n"],
             });
 
             responseText = response.data.choices[0].text.trim();
             attempts++;
         }
 
-        // Instead of printing the response, send it as a JSON object
+        // Convert escaped newlines back to actual newline characters
+        responseText = responseText.replace(/\\n/g, '\n');
+
+        // Return the response as a JSON object
         res.json({ response: responseText });
     } catch (error) {
         console.error("Caelum is Turned off >> Error while running completion:", error.message);
         res.status(500).json({ error: error.message });
     }
 });
-/**=======END CHAT ROUTE=========================**/
+//=======END CHAT ROUTE=========================
 
 /**======UPDATE temp_humid TABLE=============**/
 // query to create the new table
